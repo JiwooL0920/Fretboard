@@ -1,7 +1,7 @@
 import React from 'react'
 const FretMemGamePage = () => {
     return (
-        <p>Fretboard Memorization Game Page</p>
+        <h1>Fretboard Memorization Game Page</h1>
     )
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 const ScalePage = () => {
     return (
-        <p>ScalePage</p>
+        <h1>ScalePage</h1>
     )
 }
 
