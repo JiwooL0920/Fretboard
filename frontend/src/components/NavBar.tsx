@@ -13,8 +13,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
+import { useNavigate } from "react-router-dom";
+import routes from "../routes";
 
-const pages = ['Game', 'Scale', 'Triad', 'Chord', 'Interval'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const textColor = "#e7e6e5";
 const navBarColor = "#303233"
@@ -22,6 +23,7 @@ const navBarColor = "#303233"
 const NavBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -66,6 +68,7 @@ const NavBar = () => {
             FRET
           </Typography>
 
+           {/* collapsed menu  */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -75,7 +78,7 @@ const NavBar = () => {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <MenuIcon />
+              <MenuIcon sx={{fontSize: '50px'}}/>
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -95,9 +98,15 @@ const NavBar = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+             {/* collapsed menu  */}
+              {routes.map((r) => (
+                <MenuItem 
+                    key={r.navName}
+                    onClick={ () => {
+                        handleCloseNavMenu();
+                        navigate(r.path)
+                    }}>
+                  <Typography textAlign="center">{r.navName}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -123,13 +132,16 @@ const NavBar = () => {
             FRET
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {routes.map((r) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
+                key={r.navName}
+                onClick={ () => {
+                    handleCloseNavMenu();
+                    navigate(r.path)
+                }}
                 sx={{ my: 2, color: textColor, display: 'block' , fontSize: '25px'}}
               >
-                {page}
+                {r.navName}
               </Button>
             ))}
           </Box>
