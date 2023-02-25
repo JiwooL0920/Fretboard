@@ -1,8 +1,16 @@
 * {
   text-align: center;
-  color: white;
+  color: rgb(231,230,229)
 }
 
 body {
-  background-color: #282c34;
+  background-color: rgb(25,26,26);
+  /* background-color: #282c34; */
+
+}
+
+h1 {
+  font-size: 50px;
+  margin-top: 40px;
+  margin-bottom: 70px;
 }

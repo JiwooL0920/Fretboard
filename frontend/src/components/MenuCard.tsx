@@ -19,19 +19,38 @@ const MenuCard = (props: menuCardProps) => {
 
     return (
       <div onClick={() => navigate(props.path)}>
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ 
+            width: 700, 
+            height:450, 
+            margin:3,
+            // display:'flex', 
+            // justifyContent:'center',
+            boxShadow: 3,
+            backgroundColor: '#303233',
+        }}>
             <CardActionArea>
             <CardMedia
                 component="img"
-                height="140"
+                height="300"
                 image= {props.imgLink}
             />
             <CardContent>
-                <Typography gutterBottom variant="h5" component="div" color="black">
-                {props.name}
+                <Typography 
+                    gutterBottom 
+                    component="div" 
+                    color="#e7e6e5"
+                    fontWeight="bold"
+                    fontSize='37px'
+                >
+                    {props.name}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                {props.description}
+                <Typography
+                    variant="body1" 
+                    color="#e7e6e5"
+                    fontWeight="bold"
+                    fontSize='23px'
+                >
+                    {props.description}
                 </Typography>
             </CardContent>
             </CardActionArea>
