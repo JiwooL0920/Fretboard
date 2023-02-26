@@ -14,7 +14,7 @@
     /* fret  */
     --fret-height: calc(var(--string-thickness) + ((var(--fretboard-height) - (6 * var(--string-thickness))) / 5));
     --fret-thickness: calc(var(--string-thickness) * 1.5);
-    --fret-color: #303233;
+    --fret-color: #333030;
 
 
     /* nut */
@@ -22,7 +22,7 @@
 
     /* position mark  */
     --position-mark-size: calc(var(--note-size) * 0.8);
-    --position-mark-color: #3e3d32;
+    --position-mark-color: rgb(75, 75, 75);
     --single-mark-position: calc(0.9 * var(--fretboard-height));
     --double-mark-position-top: calc(0.55 * var(--fretboard-height));
     --double-mark-position-bottom: calc(-0.55 * var(--fretboard-height));

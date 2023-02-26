@@ -14,6 +14,7 @@ interface StringProps {
 }
 
 interface FretProps {
+    stringNumber:number,
     fretNumber:number,
     note:string
     rootNote:string
@@ -25,7 +26,12 @@ const Fret = (props: FretProps) => {
 
     return (
         <div 
-            className={"fret" + (note === props.rootNote ? ' root-note' : '')}
+            className={
+                "fret" 
+                + (props.stringNumber === 1 && [3,5,7,9,15,17,19,21].includes(fretNumber) ? ' singlePositionMark' : '')
+                + (props.stringNumber === 1 && fretNumber === 12 ? ' doublePositionMarkTop' : '')
+                + (props.stringNumber === 6 && fretNumber === 12 ? ' doublePositionMarkBottom' : '')
+                + (note === props.rootNote ? ' root-note' : '')}
             fret-number={props.fretNumber} 
             fret-note={props.note} 
             // style={}
@@ -46,8 +52,9 @@ const String = (props: StringProps) => {
             string-number={stringNumber}
             string-note={stringNote}
         >
-            { [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15].map( (i:number) => {
+            { [0,1,2,3,4,5,6,7,8,9,10,11,12].map( (i:number) => {
                 const fretProps:FretProps = {
+                    stringNumber: stringNumber,
                     fretNumber:i, 
                     note:getNote(stringNumber,i),
                     rootNote:props.rootNote
