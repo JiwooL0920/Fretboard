@@ -50,6 +50,7 @@ const routes = [
       path: '/interval',
       element: <IntervalPage/>,
       name: "Interval Generator",
+      navName: "Interval",
       description: "Graphic illustration of intervals.",
       imgLink: "https://guitar.com/wp-content/uploads/2018/02/fretboard-notes-all@1500x600.jpg"
     },

@@ -1,7 +1,13 @@
 import React from 'react'
+import Fretboard from '../components/fretboard/Fretboard'
 const FretMemGamePage = () => {
     return (
-        <h1>Fretboard Memorization Game Page</h1>
+        <div>
+            <h1>Fretboard</h1>
+            <Fretboard/>
+        </div>
+
+        
     )
 }
 

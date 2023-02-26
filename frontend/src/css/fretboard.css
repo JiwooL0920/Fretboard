@@ -1,0 +1,187 @@
+/* constants */
+:root {
+    /* fretboard  */
+    --fretboard-width: 70%;
+    --fretboard-height:400px;
+    --fretboard-border: calc((var(--fret-height) / 2) - (var(--string-thickness) / 2));
+    --fretboard-color: #e7e6e5;
+
+    /* string  */
+    --string-thickness: 7px;
+    --string-color: linear-gradient(rgb(182, 182, 182), rgb(109, 109, 109), rgb(148, 147, 150)); 
+    /* --string-color: #303233;; */
+
+    /* fret  */
+    --fret-height: calc(var(--string-thickness) + ((var(--fretboard-height) - (6 * var(--string-thickness))) / 5));
+    --fret-thickness: calc(var(--string-thickness) * 1.5);
+    --fret-color: #303233;
+
+
+    /* nut */
+    --nut-color: rgb(134, 134, 134);
+
+    /* position mark  */
+    --position-mark-size: calc(var(--note-size) * 0.8);
+    --position-mark-color: #3e3d32;
+    --single-mark-position: calc(0.9 * var(--fretboard-height));
+    --double-mark-position-top: calc(0.55 * var(--fretboard-height));
+    --double-mark-position-bottom: calc(-0.55 * var(--fretboard-height));
+
+    /* note  */
+    --note-size: calc(var(--fret-height) * 0.7);
+    /* --note-color: #a6e22e;
+    --note-border: #6a911c; */
+    --note-border: #1b1b17;
+    --note-color: rgb(85,137,119);
+    --root-note-color: #f92672;
+    --root-note-border: #79153a;
+    --note-text-color: #e7e6e5;
+
+    --noteOpacity: 1;
+}
+
+
+
+
+
+.fretboard {
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between;
+    /* width: 100%; */
+    width: var(--fretboard-width);
+    margin: 0 auto;
+    height: var(--fretboard-height);
+    background: var(--fretboard-color);
+    border-top: var(--fretboard-border) solid var(--fretboard-color);
+    /* border-bottom: var(--fretboard-border) solid var(--fretboard-color); */
+}
+
+
+
+.string {
+    display: flex;
+}
+
+
+.string:before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    width: var(--fretboard-width);
+    height: var(--string-thickness);
+    background: var(--string-color);
+}
+
+
+
+/* fret  */
+.fret {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: calc(-1 * ((var(--fret-height) / 2) - (var(--string-thickness) / 2)));
+    height: var(--fret-height);
+    border-right: var(--fret-thickness) solid var(--fret-color);
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+.fret:before {
+    /* display: none; */
+    content: attr(fret-note);
+    font-size: 25px;
+    font-weight: bold;
+    color: var(--note-text-color);
+    background: var(--note-color);
+    /* border: calc(var(--fret-thickness) * 0.6) solid var(--note-border); */
+    text-align: center;
+    line-height: var(--note-size);
+    width: var(--note-size);
+    height: var(--note-size);
+    border-radius: 50%;
+    opacity: 80%;
+    opacity: var(--noteOpacity);
+    position: absolute;
+    z-index: 2;
+}
+
+.fret.interval-selected:before {
+    content: attr(interval-symbol);
+}
+
+.fret.root-note:before {
+    border: calc(var(--fret-thickness) * 0.6) solid var(--root-note-border);
+}
+
+
+/* @media only screen and (max-width: 600px) {
+    .fret:before {
+        border: calc(var(--fret-thickness) * 0.3) solid black;
+        width: calc(0.5 * var(--note-size));
+        height: calc(0.5 * var(--note-size));
+        line-height: calc(0.5 * var(--note-size));
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .fret:before {
+        display: none;
+    }
+} */
+
+/* 0th fret */
+.fret:first-child {
+    background: #1b1b17;
+    border-right: calc(var(--string-thickness) * 3) solid var(--nut-color);
+    border-image: none;
+    /* border-image: var(--nut-color); */
+}
+
+/* 0th fret note coloring */
+/* .fret:first-child:before {
+    background: var(--note-border);
+    border: calc(var(--fret-thickness) * 0.6) solid var(--note-color);
+    color: var(--note-color)
+} */
+
+
+
+
+
+
+/* position mark  */
+/* TODO: add a class to html later so we don't have to repeat same code  */
+.singlePositionMark:after {
+    content: "";
+    text-align: center;
+    position: absolute;
+    background: var(--position-mark-color);
+    height: var(--position-mark-size);
+    width: var(--position-mark-size);
+    border-radius: 50%;
+    margin-top: var(--single-mark-position);
+}
+
+.doublePositionMarkTop:after {
+    content: "";
+    text-align: center;
+    position: absolute;
+    background: var(--position-mark-color);
+    height: var(--position-mark-size);
+    width: var(--position-mark-size);
+    border-radius: 50%;
+    margin-top: var(--double-mark-position-top);
+}
+
+.doublePositionMarkBottom:after {
+    content: "";
+    text-align: center;
+    position: absolute;
+    background: var(--position-mark-color);
+    height: var(--position-mark-size);
+    width: var(--position-mark-size);
+    border-radius: 50%;
+    margin-top: var(--double-mark-position-bottom);
+}
