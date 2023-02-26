@@ -4,7 +4,7 @@ const FretMemGamePage = () => {
     return (
         <div>
             <h1>Fretboard</h1>
-            <Fretboard/>
+            {/* <Fretboard/> */}
         </div>
 
         

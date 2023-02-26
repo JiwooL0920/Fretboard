@@ -112,7 +112,8 @@
 }
 
 .fret.root-note:before {
-    border: calc(var(--fret-thickness) * 0.6) solid var(--root-note-border);
+    background-color: var(--root-note-color);
+    /* border: calc(var(--fret-thickness) * 0.6) solid var(--root-note-border); */
 }
 
 

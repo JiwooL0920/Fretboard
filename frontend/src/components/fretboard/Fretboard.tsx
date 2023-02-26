@@ -3,15 +3,20 @@ import {DisplayMode, Accidental, Unit} from './enums';
 import {getNote} from './logic'
 import '../../css/fretboard.css';
 
+export interface FretboardProps {
+    rootNote: string
+}
 
 interface StringProps {
     stringNumber:number,
-    stringNote:string
+    stringNote:string,
+    rootNote:string
 }
 
 interface FretProps {
     fretNumber:number,
     note:string
+    rootNote:string
 }
 
 const Fret = (props: FretProps) => {
@@ -20,7 +25,7 @@ const Fret = (props: FretProps) => {
 
     return (
         <div 
-            className="fret" 
+            className={"fret" + (note === props.rootNote ? ' root-note' : '')}
             fret-number={props.fretNumber} 
             fret-note={props.note} 
             // style={}
@@ -44,7 +49,8 @@ const String = (props: StringProps) => {
             { [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15].map( (i:number) => {
                 const fretProps:FretProps = {
                     fretNumber:i, 
-                    note:getNote(stringNumber,i)
+                    note:getNote(stringNumber,i),
+                    rootNote:props.rootNote
                 }
                 return <Fret {...fretProps}/>
             })}
@@ -55,7 +61,7 @@ const String = (props: StringProps) => {
     )
 }
 
-const Fretboard = () => {
+const Fretboard = (props: FretboardProps) => {
     var displayMode: DisplayMode = DisplayMode.Note;
     var numStrings:number = 6;
     var numFrets:number = 24;
@@ -63,13 +69,15 @@ const Fretboard = () => {
 
     var tuning:string[] = ['E','A','D','G','B','E'];
 
+    console.log(props.rootNote)
 
     return (
         <div className="fretboard">
             { tuning.slice(0).reverse().map( (note, i) => {
                 const stringProps:StringProps = {
                     stringNumber: i+1,
-                    stringNote:note
+                    stringNote:note,
+                    rootNote:props.rootNote
                 }
                 return <String {...stringProps}/>
             })}
