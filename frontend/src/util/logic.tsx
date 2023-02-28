@@ -8,8 +8,9 @@ import {DisplayMode, Accidental, Unit} from './enums';
 // }
 
 
-const notesSharp:string[] = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
-const notesFlat:string[] = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
+export const notesSharp:string[] = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+export const notesFlat:string[] = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
+
 
 var accidental:Accidental.Sharp;
 

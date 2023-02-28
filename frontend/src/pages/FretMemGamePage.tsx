@@ -1,5 +1,5 @@
 import React from 'react'
-import Fretboard from '../components/fretboard/Fretboard'
+import Fretboard from '../components/Fretboard'
 const FretMemGamePage = () => {
     return (
         <div>

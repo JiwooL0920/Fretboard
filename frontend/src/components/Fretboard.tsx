@@ -1,7 +1,7 @@
 import React from 'react'
-import {DisplayMode, Accidental, Unit} from './enums';
-import {getNote} from './logic'
-import '../../css/fretboard.css';
+import {DisplayMode, Accidental, Unit} from '../util/enums';
+import {getNote} from '../util/logic'
+import '../css/fretboard.css';
 
 export interface FretboardProps {
     rootNote: string
