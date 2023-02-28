@@ -1,6 +1,7 @@
 /* constants */
 :root {
     /* fretboard  */
+    --fretboard-min-width: 1200px;
     --fretboard-width: 70%;
     --fretboard-height:400px;
     --fretboard-border: calc((var(--fret-height) / 2) - (var(--string-thickness) / 2));
@@ -49,6 +50,7 @@
     flex-direction: column; 
     justify-content: space-between;
     /* width: 100%; */
+    min-width: var(--fretboard-min-width);
     width: var(--fretboard-width);
     margin: 0 auto;
     height: var(--fretboard-height);

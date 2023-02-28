@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import Fretboard, {FretboardProps} from '../components/Fretboard'
-import {notesFlat, notesSharp} from '../util/logic'
+import {notesFlat, notesSharp, intervals} from '../util/logic'
 import {Accidental} from '../util/enums'
 import { SelectChangeEvent } from '@mui/material/Select';
 import Button from '@mui/material/Button';
@@ -8,10 +8,7 @@ import Button from '@mui/material/Button';
 const IntervalPage = () => {
     const [rootNote, setRootNote] = useState("C");
     const [accidental, setAccidental] = useState(Accidental.Flat);
-
-    const handleChange = (event: SelectChangeEvent) => {
-        setRootNote(event.target.value as string);
-    };
+    const [selectedIntervals, setSelectedIntervals] = useState(new Set<string>("Octaves"));
 
     const fretboardProps:FretboardProps = {
         rootNote : rootNote
@@ -21,7 +18,7 @@ const IntervalPage = () => {
     const createRootNoteButtons = () => {
         return(
             <div className="rootButtons">
-                { (accidental === Accidental.Flat ? notesFlat : notesSharp).map((note) => {
+                { (accidental === Accidental.Flat ? notesFlat : notesSharp).map((note:string) => {
                     return (
                         <Button 
                             sx={{
@@ -31,8 +28,8 @@ const IntervalPage = () => {
                                 color: '#FFFFFF',
                                 fontSize: 30,
                                 textTransform: 'none',
-                                '&:hover': { backgroundColor: note === rootNote ? '#611630' : '#1e252b'},
-                                backgroundColor: note === rootNote ? '#711a39' : '#303233'
+                                backgroundColor: note === rootNote ? '#711a39' : '#303233',
+                                '&:hover': { backgroundColor: note === rootNote ? '#611630' : '#1e252b'}
                                 
                             }}
                             onClick={() => setRootNote(note)}
@@ -44,6 +41,36 @@ const IntervalPage = () => {
         );
     }
 
+    const createIntervalButtons = () => {
+        return(
+            <div className="intervalButtons">
+                {intervals.map((interval:string) => {
+                    return (
+                        <Button
+                            sx={{
+                                width: 200,
+                                height: 80,
+                                margin: 1,
+                                color: '#FFFFFF',
+                                fontSize: 20,
+                                textTransform: 'none',
+                                backgroundColor: selectedIntervals.has(interval) ? '#546961' : '#303233',
+                                '&:hover': { backgroundColor: selectedIntervals.has(interval) ? '#455750' : '#1e252b'},
+                            }}
+                            onClick={() => {
+                                const newIntervalsSet = new Set(selectedIntervals);
+                                selectedIntervals.has(interval) ? newIntervalsSet.delete(interval) : newIntervalsSet.add(interval);
+                                setSelectedIntervals(newIntervalsSet);
+                            }}
+                        >
+                            {interval}
+                        </Button>
+                    )
+                })}
+            </div>
+        );
+    }
+
 
     return (
         <div className="interval-page">
@@ -51,6 +78,7 @@ const IntervalPage = () => {
             <Fretboard {...fretboardProps}/>
         
             {createRootNoteButtons()}
+            {createIntervalButtons()}
 
         </div>
   

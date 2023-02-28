@@ -11,6 +11,7 @@ import {DisplayMode, Accidental, Unit} from './enums';
 export const notesSharp:string[] = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 export const notesFlat:string[] = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
 
+export const intervals:string[] = ["Minor Second", "Major Second", "Minor Third", "Major Third", "Perfect Fourth", "Perfect Fifth", "Diminished Fifth", "Minor Sixth", "Major Sixth", "Minor 7th", "Major Seventh","Octaves"]
 
 var accidental:Accidental.Sharp;
 
