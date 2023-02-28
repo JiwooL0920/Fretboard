@@ -1,17 +1,33 @@
 import React, {useState} from 'react'
 import Fretboard, {FretboardProps} from '../components/Fretboard'
-import {notesFlat, notesSharp, intervals} from '../util/logic'
-import {Accidental} from '../util/enums'
-import { SelectChangeEvent } from '@mui/material/Select';
+import {notesFlat, notesSharp, intervalToSymbol, getIntervalNoteFromRootNote} from '../util/logic'
+import {DisplayMode, Accidental} from '../util/enums'
 import Button from '@mui/material/Button';
 
 const IntervalPage = () => {
     const [rootNote, setRootNote] = useState("C");
     const [accidental, setAccidental] = useState(Accidental.Flat);
-    const [selectedIntervals, setSelectedIntervals] = useState(new Set<string>("Octaves"));
+    const [displayMode, setDisplayMode] = useState(DisplayMode.Interval)
+    const [selectedIntervals, setSelectedIntervals] = useState(new Set<string>(["Root", "Major Third", "Perfect Fifth"]));
+    
+    // Dictionary that, for the selected root Note and given set of selected intervals, store what note each interval corresponds to 
+    // { interval, note }
+    // ex. rootNote = C,    selected intervals = {"Major Third", "Perfect Fifth"},    noteToInterval = {"Major Third":"E", "Perfect Fifth":"G"}
+    const noteToInterval: {[key: string]: string} = {}
+
+    selectedIntervals.forEach((interval:string) => {
+        const note = getIntervalNoteFromRootNote(rootNote, interval)
+        noteToInterval[note] = interval; 
+    })
+
+    console.log("Hello!")
+    console.log(noteToInterval)
 
     const fretboardProps:FretboardProps = {
-        rootNote : rootNote
+        rootNote : rootNote,
+        selectedIntervals: selectedIntervals,
+        displayMode: displayMode,
+        noteToInterval: noteToInterval
     }
 
 
@@ -44,7 +60,7 @@ const IntervalPage = () => {
     const createIntervalButtons = () => {
         return(
             <div className="intervalButtons">
-                {intervals.map((interval:string) => {
+                {Object.keys(intervalToSymbol).map((interval:string) => {
                     return (
                         <Button
                             sx={{

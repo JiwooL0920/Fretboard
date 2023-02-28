@@ -1,42 +1,51 @@
 import React from 'react'
 import {DisplayMode, Accidental, Unit} from '../util/enums';
-import {getNote} from '../util/logic'
+import {getIntervalNoteFromRootNote, getNote, intervalToSymbol} from '../util/logic'
 import '../css/fretboard.css';
+import { Settings } from '@mui/icons-material';
 
 export interface FretboardProps {
     rootNote: string
+    selectedIntervals: Set<string>,
+    displayMode: DisplayMode,
+    noteToInterval: {[key: string]: string}
 }
 
 interface StringProps {
-    stringNumber:number,
-    stringNote:string,
-    rootNote:string
+    stringNumber: number
+    stringNote: string
+    settings: FretboardProps
 }
 
 interface FretProps {
-    stringNumber:number,
-    fretNumber:number,
-    note:string
-    rootNote:string
+    stringNumber: number
+    fretNumber: number
+    note: string
+    settings: FretboardProps
 }
 
 const Fret = (props: FretProps) => {
-    const fretNumber:number = props.fretNumber;
-    const note:String = props.note;
+
+    // interval symbol for the given note 
+    const intervalSymbol = intervalToSymbol[props.settings.noteToInterval[props.note]];
+    console.log(intervalSymbol)
 
     return (
         <div 
             className={
                 "fret" 
-                + (props.stringNumber === 1 && [3,5,7,9,15,17,19,21].includes(fretNumber) ? ' singlePositionMark' : '')
-                + (props.stringNumber === 1 && fretNumber === 12 ? ' doublePositionMarkTop' : '')
-                + (props.stringNumber === 6 && fretNumber === 12 ? ' doublePositionMarkBottom' : '')
-                + (note === props.rootNote ? ' root-note' : '')}
+                + (props.stringNumber === 1 && [3,5,7,9,15,17,19,21].includes(props.fretNumber) ? ' singlePositionMark' : '')
+                + (props.stringNumber === 1 && props.fretNumber === 12 ? ' doublePositionMarkTop' : '')
+                + (props.stringNumber === 6 && props.fretNumber === 12 ? ' doublePositionMarkBottom' : '')
+                + (props.note === props.settings.rootNote ? ' root-note' : '')
+                + (props.settings.displayMode === DisplayMode.Interval ? ' interval-selected' : '')
+            }
             fret-number={props.fretNumber} 
             fret-note={props.note} 
-            // style={}
+            interval-symbol={intervalSymbol}
+            style={{ "--noteOpacity": props.note in props.settings.noteToInterval ? 1 : 0 } as React.CSSProperties}
         >
-            {note}
+            {props.settings.displayMode === DisplayMode.Note ? props.note : intervalSymbol}
         </div>
     )
 }
@@ -57,7 +66,7 @@ const String = (props: StringProps) => {
                     stringNumber: stringNumber,
                     fretNumber:i, 
                     note:getNote(stringNumber,i),
-                    rootNote:props.rootNote
+                    settings:props.settings
                 }
                 return <Fret {...fretProps}/>
             })}
@@ -69,14 +78,10 @@ const String = (props: StringProps) => {
 }
 
 const Fretboard = (props: FretboardProps) => {
-    var displayMode: DisplayMode = DisplayMode.Note;
-    var numStrings:number = 6;
-    var numFrets:number = 24;
-    var accidental:Accidental.Sharp;
-
     var tuning:string[] = ['E','A','D','G','B','E'];
 
-    console.log(props.rootNote)
+
+
 
     return (
         <div className="fretboard">
@@ -84,7 +89,7 @@ const Fretboard = (props: FretboardProps) => {
                 const stringProps:StringProps = {
                     stringNumber: i+1,
                     stringNote:note,
-                    rootNote:props.rootNote
+                    settings:props
                 }
                 return <String {...stringProps}/>
             })}
