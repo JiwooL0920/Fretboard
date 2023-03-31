@@ -20,9 +20,6 @@ const IntervalPage = () => {
         noteToInterval[note] = interval; 
     })
 
-    console.log("Hello!")
-    console.log(noteToInterval)
-
     const fretboardProps:FretboardProps = {
         rootNote : rootNote,
         selectedIntervals: selectedIntervals,

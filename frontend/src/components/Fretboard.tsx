@@ -28,7 +28,6 @@ const Fret = (props: FretProps) => {
 
     // interval symbol for the given note 
     const intervalSymbol = intervalToSymbol[props.settings.noteToInterval[props.note]];
-    console.log(intervalSymbol)
 
     return (
         <div 
