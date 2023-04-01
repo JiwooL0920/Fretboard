@@ -1,5 +1,5 @@
 import Homepage from "./pages/Homepage";
-import FretMemGamePage from "./pages/FretMemGamePage";
+import FretGamePage from "./pages/FretGamePage";
 import ScalePage from "./pages/ScalePage";
 import TriadPage from "./pages/TriadPage";
 import ChordPage from "./pages/ChordPage";
@@ -16,7 +16,7 @@ const routes = [
     },
     {
       path: '/fretmemgame',
-      element: <FretMemGamePage/>,
+      element: <FretGamePage/>,
       name: "Fretboard Game",
       navName: "Game",
       description: "Memorize the notes on the fretboard.",

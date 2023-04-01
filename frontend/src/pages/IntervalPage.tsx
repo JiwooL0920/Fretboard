@@ -1,29 +1,26 @@
 import Fretboard from '../components/Fretboard'
-import {notesFlat, notesSharp, intervalToSymbol} from '../util/logic'
+import {notesFlat, notesSharp, intervalToSymbol} from '../util/intervalLogic'
 import {Accidental, DisplayMode} from '../util/enums'
 import Button from '@mui/material/Button';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import Grid from '@mui/material/Grid';
 
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
-import * as fretboardSlice from '../redux/fretboardSlice'
-
+import * as intervalPageSlice from '../redux/intervalPageSlice'
 import { RootState } from '../redux/store';
 
 
 const IntervalPage = () => {
     // REDUX
-    const fretboardSetting = useSelector<RootState, fretboardSlice.FretboardState>(state => state.fretboard);
+    const intervalPageState = useSelector<RootState, intervalPageSlice.IntervalPageState>(state => state.intervalPage);
     const dispatch = useDispatch();
     
 
     const createRootNoteButtons = () => {
         return(
             <div className="rootButtons">
-                { (fretboardSetting.accidental === Accidental.Flat ? notesFlat : notesSharp).map((note:string) => {
+                { (intervalPageState.accidental === Accidental.Flat ? notesFlat : notesSharp).map((note:string) => {
                     return (
                         <Button 
                             key={note}
@@ -34,11 +31,11 @@ const IntervalPage = () => {
                                 color: '#FFFFFF',
                                 fontSize: 30,
                                 textTransform: 'none',
-                                backgroundColor: note === fretboardSetting.rootNote ? '#711a39' : '#303233',
-                                '&:hover': { backgroundColor: note === fretboardSetting.rootNote ? '#611630' : '#1e252b'}
+                                backgroundColor: note === intervalPageState.rootNote ? '#711a39' : '#303233',
+                                '&:hover': { backgroundColor: note === intervalPageState.rootNote ? '#611630' : '#1e252b'}
                                 
                             }}
-                            onClick={() => dispatch(fretboardSlice.setRootNote(note))}
+                            onClick={() => dispatch(intervalPageSlice.setRootNote(note))}
                         >
                             {note}
                         </Button>
@@ -61,10 +58,10 @@ const IntervalPage = () => {
                                 color: '#FFFFFF',
                                 fontSize: 20,
                                 textTransform: 'none',
-                                backgroundColor: fretboardSetting.selectedIntervals.includes(interval) ? '#546961' : '#303233',
-                                '&:hover': { backgroundColor: fretboardSetting.selectedIntervals.includes(interval) ? '#455750' : '#1e252b'},
+                                backgroundColor: intervalPageState.selectedIntervals.includes(interval) ? '#546961' : '#303233',
+                                '&:hover': { backgroundColor: intervalPageState.selectedIntervals.includes(interval) ? '#455750' : '#1e252b'},
                             }}
-                            onClick={() => { dispatch(fretboardSlice.toggleSelectedInterval(interval)) }}
+                            onClick={() => { dispatch(intervalPageSlice.toggleSelectedInterval(interval)) }}
                         >
                             {interval}
                         </Button>
@@ -88,8 +85,8 @@ const IntervalPage = () => {
                 <Grid item>
                     <Switch
                         // sx={{ width: 60, height: 40 }}
-                        checked={fretboardSetting.displayMode === DisplayMode.Interval ? true : false}
-                        onChange={() => dispatch(fretboardSlice.toggleDisplayMode())} 
+                        checked={intervalPageState.displayMode === DisplayMode.Interval ? true : false}
+                        onChange={() => dispatch(intervalPageSlice.toggleDisplayMode())} 
                         value="checked" 
                     />
                 </Grid>
@@ -99,8 +96,11 @@ const IntervalPage = () => {
 
 
             <Fretboard />        
+
+
             {createRootNoteButtons()}
             {createIntervalButtons()}
+
 
         </div>
   

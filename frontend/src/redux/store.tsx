@@ -1,6 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
-import fretboardSlice from './fretboardSlice';
 import { getDefaultMiddleware } from '@reduxjs/toolkit';
+// Slice
+import fretboardSlice from './fretboardSlice';
+import intervalPageSlice from './intervalPageSlice';
 
 // Suppress some error message
 const customizedMiddleware = getDefaultMiddleware({
@@ -9,7 +11,8 @@ const customizedMiddleware = getDefaultMiddleware({
 
 export const store = configureStore({
   reducer: {
-    fretboard: fretboardSlice
+    fretboard: fretboardSlice,
+    intervalPage: intervalPageSlice
   },
   middleware: customizedMiddleware
 })

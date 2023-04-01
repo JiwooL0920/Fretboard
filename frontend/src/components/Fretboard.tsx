@@ -1,11 +1,12 @@
 import React from 'react'
 import {DisplayMode} from '../util/enums';
-import {getIntervalNoteFromRootNote, getNote, intervalToSymbol} from '../util/logic'
+import {getIntervalNoteFromRootNote, getNote, intervalToSymbol} from '../util/intervalLogic'
 import '../css/fretboard.css';
 
 import { useSelector } from 'react-redux';
-import * as fretboardSlice from '../redux/fretboardSlice'
 import { RootState } from '../redux/store';
+import * as intervalPageSlice from '../redux/intervalPageSlice'
+import * as fretboardSlice from '../redux/fretboardSlice'
 
 // PROPS ==============================================================
 interface StringProps {
@@ -30,13 +31,14 @@ interface FretProps {
 
 const Fretboard = () => {
     // REDUX
-    const fretboardSetting = useSelector<RootState, fretboardSlice.FretboardState>(state => state.fretboard);
+    const fretboardState = useSelector<RootState, fretboardSlice.FretboardState>(state => state.fretboard);
+    const intervalPageState = useSelector<RootState, intervalPageSlice.IntervalPageState>(state => state.intervalPage);
 
     // Dictionary that maps selected notes and its interval symbol
     // ex. {'C':'1', 'E':'3', 'G':'5'}
     const notesToDisplay: {[key: string]: string} = {};
-    for (const interval of fretboardSetting.selectedIntervals) {
-        const note:string = getIntervalNoteFromRootNote(fretboardSetting.rootNote,interval);
+    for (const interval of intervalPageState.selectedIntervals) {
+        const note:string = getIntervalNoteFromRootNote(intervalPageState.rootNote,interval);
         const intervalSymbol = intervalToSymbol[interval];
         notesToDisplay[note] = intervalSymbol
     } 
@@ -50,7 +52,7 @@ const Fretboard = () => {
                 string-number={props.stringNumber}
                 string-note={props.stringNote}
             >
-                { Array.from({ length: fretboardSetting.numFrets + 1 }, (_, index) => index).map( (i:number) => {
+                { Array.from({ length: fretboardState.numFrets + 1 }, (_, index) => index).map( (i:number) => {
                     const fretProps:FretProps = {
                         stringNumber: props.stringNumber,
                         fretNumber:i, 
@@ -72,8 +74,8 @@ const Fretboard = () => {
                     + (props.stringNumber === 1 && [3,5,7,9,15,17,19,21].includes(props.fretNumber) ? ' singlePositionMark' : '')
                     + (props.stringNumber === 1 && props.fretNumber === 12 ? ' doublePositionMarkTop' : '')
                     + (props.stringNumber === 6 && props.fretNumber === 12 ? ' doublePositionMarkBottom' : '')
-                    + (props.note === fretboardSetting.rootNote ? ' root-note' : '')
-                    + (fretboardSetting.displayMode === DisplayMode.Interval ? ' interval-selected' : '')
+                    + (props.note === intervalPageState.rootNote ? ' root-note' : '')
+                    + (intervalPageState.displayMode === DisplayMode.Interval ? ' interval-selected' : '')
                 }
                 fret-number={props.fretNumber} 
                 fret-note={props.note} 
@@ -88,7 +90,7 @@ const Fretboard = () => {
     // Fretboard component 
     return (
         <div className="fretboard">
-            { fretboardSetting.tuning.slice(0).reverse().map( (note, i) => {
+            { fretboardState.tuning.slice(0).reverse().map( (note, i) => {
                 const stringProps:StringProps = {
                     stringNumber: i+1,
                     stringNote:note,
