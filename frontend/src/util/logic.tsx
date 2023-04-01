@@ -1,12 +1,4 @@
-import React from 'react'
-import {DisplayMode, Accidental, Unit} from './enums';
-
-// const logic = () => {
-//   return (
-//     <div>logic</div>
-//   )
-// }
-
+import {Accidental} from './enums';
 
 export const notesSharp:string[] = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 export const notesFlat:string[] = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];

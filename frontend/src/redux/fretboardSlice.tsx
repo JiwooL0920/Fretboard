@@ -1,23 +1,36 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { DisplayMode } from '../util/enums';
+import { DisplayMode, Accidental } from '../util/enums';
 
 
 export interface FretboardState {
+    tuning: string[]
+    accidental: Accidental
+    displayMode: DisplayMode
     rootNote: string
     selectedIntervals: string[]
-    displayMode: DisplayMode
 }
 
 const initialState: FretboardState = {
+    tuning: ['E','A','D','G','B','E'],
+    accidental: Accidental.Flat,
+    displayMode: DisplayMode.Interval,
     rootNote: 'C',
     selectedIntervals: ["Root", "Major Third", "Perfect Fifth"],
-    displayMode: DisplayMode.Note,
 }
+
+
+
 
 export const fretboardSlice = createSlice({
     name: 'fretboard-setting',
     initialState,
     reducers:  {
+        setAccidental: (state, action: PayloadAction<Accidental>) => {
+            state.accidental = action.payload;
+          },
+        setDisplayMode: (state, action: PayloadAction<DisplayMode>) => {
+            state.displayMode = action.payload;
+        },
         setRootNote: (state, action: PayloadAction<string>) => {
             state.rootNote = action.payload; 
         },
