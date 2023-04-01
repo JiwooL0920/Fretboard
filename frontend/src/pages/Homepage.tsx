@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 
 import routes from '../routes';
 
-const Homepage = () => {
+const HomePage = () => {
     return (
         <div>
             <h1>Homepage</h1>
@@ -31,4 +31,4 @@ const Homepage = () => {
     )
 }
 
-export default Homepage
+export default HomePage

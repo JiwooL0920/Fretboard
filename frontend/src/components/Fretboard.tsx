@@ -2,6 +2,7 @@ import React from 'react'
 import {DisplayMode} from '../util/enums';
 import {getIntervalNoteFromRootNote, getNote, intervalToSymbol} from '../util/intervalLogic'
 import '../css/fretboard.css';
+import { useLocation } from "react-router-dom";
 
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
@@ -24,25 +25,26 @@ interface FretProps {
 // FRETBOARD COMPONENT =======================================================
 // Structure:
 // <Fretboard/>
-//      <String/>
-//          <Fret/>
+//      <String/>         6  strings
+//          <Fret/>       22 frets per string 
 //          ...
 ///      ...
 
 const Fretboard = () => {
-    // REDUX
+    const location = useLocation();
     const fretboardState = useSelector<RootState, fretboardSlice.FretboardState>(state => state.fretboard);
-    const intervalPageState = useSelector<RootState, intervalPageSlice.IntervalPageState>(state => state.intervalPage);
 
-    // Dictionary that maps selected notes and its interval symbol
-    // ex. {'C':'1', 'E':'3', 'G':'5'}
-    const notesToDisplay: {[key: string]: string} = {};
-    for (const interval of intervalPageState.selectedIntervals) {
-        const note:string = getIntervalNoteFromRootNote(intervalPageState.rootNote,interval);
-        const intervalSymbol = intervalToSymbol[interval];
-        notesToDisplay[note] = intervalSymbol
-    } 
+    let pageState: any = null; 
+    switch (location.pathname) {
+        case '/interval':
+          pageState = useSelector<RootState, intervalPageSlice.IntervalPageState>(state => state.intervalPage);
+          break;
+        default:
+          throw new Error(`Unknown page: ${location.pathname}`);
+      }
 
+      
+      
 
     // STRING COMPONENT ==========================================================
     const String = (props: StringProps) => {
@@ -67,6 +69,10 @@ const Fretboard = () => {
 
     // FRET COMPONENT ===========================================================
     const Fret = (props: FretProps) => {
+        const additionalOptions = '' 
+            + (props.note === pageState.rootNote ? ' root-note' : '')
+            + (fretboardState.displayMode === DisplayMode.Interval ? ' interval-selected' : '')
+
         return (
             <div 
                 className={
@@ -74,13 +80,12 @@ const Fretboard = () => {
                     + (props.stringNumber === 1 && [3,5,7,9,15,17,19,21].includes(props.fretNumber) ? ' singlePositionMark' : '')
                     + (props.stringNumber === 1 && props.fretNumber === 12 ? ' doublePositionMarkTop' : '')
                     + (props.stringNumber === 6 && props.fretNumber === 12 ? ' doublePositionMarkBottom' : '')
-                    + (props.note === intervalPageState.rootNote ? ' root-note' : '')
-                    + (intervalPageState.displayMode === DisplayMode.Interval ? ' interval-selected' : '')
+                    + (location.pathname === "/interval" ? additionalOptions : '')
                 }
                 fret-number={props.fretNumber} 
                 fret-note={props.note} 
-                interval-symbol={notesToDisplay[props.note]}
-                style={{ "--noteOpacity": props.note in notesToDisplay ? 1 : 0 } as React.CSSProperties}
+                interval-symbol={intervalToSymbol[pageState.selectedIntervals[pageState.notesToDisplay.indexOf(props.note)]]}
+                style={{ "--noteOpacity": pageState.notesToDisplay.includes(props.note) ? 1 : 0 } as React.CSSProperties}
             >
             </div>
         )

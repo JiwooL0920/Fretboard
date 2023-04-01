@@ -1,19 +1,17 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { DisplayMode, Accidental } from '../util/enums';
-
+import {getIntervalNoteFromRootNote} from '../util/intervalLogic'
 
 export interface IntervalPageState {
-    accidental: Accidental
-    displayMode: DisplayMode
     rootNote: string
     selectedIntervals: string[]
+    notesToDisplay: string[]
+    // selectedIntervalSymbols: string[]
 }
 
 const initialState: IntervalPageState = {
-    accidental: Accidental.Flat,
-    displayMode: DisplayMode.Interval,
     rootNote: 'C',
     selectedIntervals: ["Root", "Major Third", "Perfect Fifth"],
+    notesToDisplay: ["C","E","G"],
 }
 
 
@@ -23,35 +21,35 @@ export const intervalPageSlice = createSlice({
     name: 'fretboard-setting',
     initialState,
     reducers:  {
-        toggleAccidental: (state) => {
-            state.accidental = state.accidental === Accidental.Flat ? Accidental.Sharp : Accidental.Flat;
-        },
-        toggleDisplayMode: (state) => {
-            state.displayMode = state.displayMode === DisplayMode.Note ? DisplayMode.Interval : DisplayMode.Note;
-        },
         setRootNote: (state, action: PayloadAction<string>) => {
             state.rootNote = action.payload; 
+            intervalPageSlice.caseReducers.getNotesToDisplay(state);
         },
         toggleSelectedInterval: (state, action: PayloadAction<string>) => {
             const interval = action.payload;
             if (interval === "Root") { return; } // if "Root", don't toggle
             const index = state.selectedIntervals.indexOf(action.payload);
             if (index === -1) {
-              // add interval if it's not already in the array
-              state.selectedIntervals.push(action.payload);
+              state.selectedIntervals.push(action.payload); // add interval if it's not already in the array
             } else {
-              // remove interval if it's already in the array
-              state.selectedIntervals.splice(index, 1);
+              state.selectedIntervals.splice(index, 1); // remove interval if it's already in the array
             }
+            intervalPageSlice.caseReducers.getNotesToDisplay(state);
+        },
+        // Reducer that re-computes notesToDisplay
+        getNotesToDisplay: (state) => {
+          state.notesToDisplay = []
+          for (const interval of state.selectedIntervals) {
+            const note:string = getIntervalNoteFromRootNote(state.rootNote,interval);
+            state.notesToDisplay.push(note)
           }
+        }
                  
     }
 });
 
 // this is for dispatch
-export const {  toggleAccidental,
-                toggleDisplayMode,
-                setRootNote, 
+export const {  setRootNote, 
                 toggleSelectedInterval,
              } = intervalPageSlice.actions;
 

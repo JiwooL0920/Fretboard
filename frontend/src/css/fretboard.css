@@ -70,6 +70,7 @@
     content: "";
     position: absolute;
     z-index: 1;
+    min-width: var(--fretboard-min-width);
     width: var(--fretboard-width);
     height: var(--string-thickness);
     background: var(--string-color);

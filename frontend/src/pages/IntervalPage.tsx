@@ -7,12 +7,13 @@ import Grid from '@mui/material/Grid';
 
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
-import * as intervalPageSlice from '../redux/intervalPageSlice'
 import { RootState } from '../redux/store';
-
+import * as fretboardSlice from '../redux/fretboardSlice'
+import * as intervalPageSlice from '../redux/intervalPageSlice'
 
 const IntervalPage = () => {
     // REDUX
+    const fretboardState = useSelector<RootState, fretboardSlice.FretboardState>(state => state.fretboard);
     const intervalPageState = useSelector<RootState, intervalPageSlice.IntervalPageState>(state => state.intervalPage);
     const dispatch = useDispatch();
     
@@ -20,7 +21,7 @@ const IntervalPage = () => {
     const createRootNoteButtons = () => {
         return(
             <div className="rootButtons">
-                { (intervalPageState.accidental === Accidental.Flat ? notesFlat : notesSharp).map((note:string) => {
+                { (fretboardState.accidental === Accidental.Flat ? notesFlat : notesSharp).map((note:string) => {
                     return (
                         <Button 
                             key={note}
@@ -85,8 +86,8 @@ const IntervalPage = () => {
                 <Grid item>
                     <Switch
                         // sx={{ width: 60, height: 40 }}
-                        checked={intervalPageState.displayMode === DisplayMode.Interval ? true : false}
-                        onChange={() => dispatch(intervalPageSlice.toggleDisplayMode())} 
+                        checked={fretboardState.displayMode === DisplayMode.Interval ? true : false}
+                        onChange={() => dispatch(fretboardSlice.toggleDisplayMode())} 
                         value="checked" 
                     />
                 </Grid>
@@ -95,7 +96,7 @@ const IntervalPage = () => {
 
 
 
-            <Fretboard />        
+            <Fretboard/>        
 
 
             {createRootNoteButtons()}

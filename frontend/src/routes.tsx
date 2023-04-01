@@ -1,4 +1,4 @@
-import Homepage from "./pages/Homepage";
+import HomePage from "./pages/HomePage";
 import FretGamePage from "./pages/FretGamePage";
 import ScalePage from "./pages/ScalePage";
 import TriadPage from "./pages/TriadPage";
@@ -8,7 +8,7 @@ import IntervalPage from "./pages/IntervalPage";
 const routes = [
     {
       path: '/',
-      element: <Homepage/>,
+      element: <HomePage/>,
       name: "Home Page",
       navName: "Home",
       description: "This is the homepage.",
