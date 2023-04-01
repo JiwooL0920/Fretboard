@@ -6,37 +6,18 @@ import Button from '@mui/material/Button';
 
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
-import { FretboardState, setRootNote } from '../features/fretboard/fretboardSlice'
-import { RootState } from '../store';
+import { FretboardState, setRootNote, toggleSelectedInterval } from '../redux/fretboardSlice'
+import { RootState } from '../redux/store';
 
 
 const IntervalPage = () => {
-    // const [rootNote, setRootNote] = useState("C");
     const [accidental, setAccidental] = useState(Accidental.Flat);
     const [displayMode, setDisplayMode] = useState(DisplayMode.Interval)
-    const [selectedIntervals, setSelectedIntervals] = useState(new Set<string>(["Root", "Major Third", "Perfect Fifth"]));
 
-    const fretboard = useSelector<RootState, FretboardState>(state => state.fretboard);
+    const fretboardSetting = useSelector<RootState, FretboardState>(state => state.fretboard);
 
     const dispatch = useDispatch();
     
-    // Dictionary that, for the selected root Note and given set of selected intervals, store what note each interval corresponds to 
-    // { interval, note }
-    // ex. rootNote = C,    selected intervals = {"Major Third", "Perfect Fifth"},    noteToInterval = {"Major Third":"E", "Perfect Fifth":"G"}
-    const noteToInterval: {[key: string]: string} = {}
-
-    selectedIntervals.forEach((interval:string) => {
-        const note = getIntervalNoteFromRootNote(fretboard.rootNote, interval)
-        noteToInterval[note] = interval; 
-    })
-
-    const fretboardProps:FretboardProps = {
-        rootNote : fretboard.rootNote,
-        selectedIntervals: selectedIntervals,
-        displayMode: displayMode,
-        noteToInterval: noteToInterval
-    }
-
 
     const createRootNoteButtons = () => {
         return(
@@ -51,11 +32,11 @@ const IntervalPage = () => {
                                 color: '#FFFFFF',
                                 fontSize: 30,
                                 textTransform: 'none',
-                                backgroundColor: note === fretboard.rootNote ? '#711a39' : '#303233',
-                                '&:hover': { backgroundColor: note === fretboard.rootNote ? '#611630' : '#1e252b'}
+                                backgroundColor: note === fretboardSetting.rootNote ? '#711a39' : '#303233',
+                                '&:hover': { backgroundColor: note === fretboardSetting.rootNote ? '#611630' : '#1e252b'}
                                 
                             }}
-                            // onClick={() => dispatch(setRootNote(note))}
+                            onClick={() => dispatch(setRootNote(note))}
                         >
                             {note}
                         </Button>
@@ -77,14 +58,10 @@ const IntervalPage = () => {
                                 color: '#FFFFFF',
                                 fontSize: 20,
                                 textTransform: 'none',
-                                backgroundColor: selectedIntervals.has(interval) ? '#546961' : '#303233',
-                                '&:hover': { backgroundColor: selectedIntervals.has(interval) ? '#455750' : '#1e252b'},
+                                backgroundColor: fretboardSetting.selectedIntervals.includes(interval) ? '#546961' : '#303233',
+                                '&:hover': { backgroundColor: fretboardSetting.selectedIntervals.includes(interval) ? '#455750' : '#1e252b'},
                             }}
-                            onClick={() => {
-                                const newIntervalsSet = new Set(selectedIntervals);
-                                selectedIntervals.has(interval) ? newIntervalsSet.delete(interval) : newIntervalsSet.add(interval);
-                                setSelectedIntervals(newIntervalsSet);
-                            }}
+                            onClick={() => { dispatch(toggleSelectedInterval(interval)) }}
                         >
                             {interval}
                         </Button>
@@ -99,10 +76,10 @@ const IntervalPage = () => {
         <div className="interval-page">
             <h1>Interval Page</h1>
             {/* <Fretboard {...fretboardProps}/> */}
-            <h1>{fretboard.rootNote}</h1>
+            <h1>{fretboardSetting.rootNote}</h1>
         
             {createRootNoteButtons()}
-            {/* {createIntervalButtons()} */}
+            {createIntervalButtons()}
 
         </div>
   

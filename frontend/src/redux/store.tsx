@@ -1,10 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit'
-import fretboardSlice from './features/fretboard/fretboardSlice';
+import fretboardSlice from './fretboardSlice';
+import { getDefaultMiddleware } from '@reduxjs/toolkit';
+
+// Suppress some error message
+const customizedMiddleware = getDefaultMiddleware({
+  serializableCheck: false
+})
 
 export const store = configureStore({
   reducer: {
     fretboard: fretboardSlice
   },
+  middleware: customizedMiddleware
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
