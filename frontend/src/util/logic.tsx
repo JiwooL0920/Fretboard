@@ -62,7 +62,7 @@ var accidental:Accidental.Sharp;
 var tuning:string[] = ['E','A','D','G','B','E'];
 
 
-export const getNote = (string:number, fret:number) => {
+export const getNote = (string:number, fret:number):string => {
     let notes = (accidental === Accidental.Sharp) ? notesSharp : notesFlat; 
     let note0 = tuning[tuning.length - string];
     let note0Index = notes.indexOf(note0);
@@ -70,7 +70,7 @@ export const getNote = (string:number, fret:number) => {
     return note;
 }
 
-export const getIntervalNoteFromRootNote = (rootNote:string, interval:string) => {
+export const getIntervalNoteFromRootNote = (rootNote:string, interval:string):string => {
     let notes = (accidental === Accidental.Sharp) ? notesSharp : notesFlat; 
     let i = (notes.indexOf(rootNote) + intervalToSemitone[interval]) % 12
     return notes[i]

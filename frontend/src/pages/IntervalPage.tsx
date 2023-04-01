@@ -4,11 +4,21 @@ import {notesFlat, notesSharp, intervalToSymbol, getIntervalNoteFromRootNote} fr
 import {DisplayMode, Accidental} from '../util/enums'
 import Button from '@mui/material/Button';
 
+// REDUX
+import { useSelector, useDispatch } from 'react-redux';
+import { FretboardState, setRootNote } from '../features/fretboard/fretboardSlice'
+import { RootState } from '../store';
+
+
 const IntervalPage = () => {
-    const [rootNote, setRootNote] = useState("C");
+    // const [rootNote, setRootNote] = useState("C");
     const [accidental, setAccidental] = useState(Accidental.Flat);
     const [displayMode, setDisplayMode] = useState(DisplayMode.Interval)
     const [selectedIntervals, setSelectedIntervals] = useState(new Set<string>(["Root", "Major Third", "Perfect Fifth"]));
+
+    const fretboard = useSelector<RootState, FretboardState>(state => state.fretboard);
+
+    const dispatch = useDispatch();
     
     // Dictionary that, for the selected root Note and given set of selected intervals, store what note each interval corresponds to 
     // { interval, note }
@@ -16,12 +26,12 @@ const IntervalPage = () => {
     const noteToInterval: {[key: string]: string} = {}
 
     selectedIntervals.forEach((interval:string) => {
-        const note = getIntervalNoteFromRootNote(rootNote, interval)
+        const note = getIntervalNoteFromRootNote(fretboard.rootNote, interval)
         noteToInterval[note] = interval; 
     })
 
     const fretboardProps:FretboardProps = {
-        rootNote : rootNote,
+        rootNote : fretboard.rootNote,
         selectedIntervals: selectedIntervals,
         displayMode: displayMode,
         noteToInterval: noteToInterval
@@ -41,11 +51,11 @@ const IntervalPage = () => {
                                 color: '#FFFFFF',
                                 fontSize: 30,
                                 textTransform: 'none',
-                                backgroundColor: note === rootNote ? '#711a39' : '#303233',
-                                '&:hover': { backgroundColor: note === rootNote ? '#611630' : '#1e252b'}
+                                backgroundColor: note === fretboard.rootNote ? '#711a39' : '#303233',
+                                '&:hover': { backgroundColor: note === fretboard.rootNote ? '#611630' : '#1e252b'}
                                 
                             }}
-                            onClick={() => setRootNote(note)}
+                            // onClick={() => dispatch(setRootNote(note))}
                         >
                             {note}
                         </Button>
@@ -88,10 +98,11 @@ const IntervalPage = () => {
     return (
         <div className="interval-page">
             <h1>Interval Page</h1>
-            <Fretboard {...fretboardProps}/>
+            {/* <Fretboard {...fretboardProps}/> */}
+            <h1>{fretboard.rootNote}</h1>
         
             {createRootNoteButtons()}
-            {createIntervalButtons()}
+            {/* {createIntervalButtons()} */}
 
         </div>
   

@@ -4,10 +4,6 @@ import {getIntervalNoteFromRootNote, getNote, intervalToSymbol} from '../util/lo
 import '../css/fretboard.css';
 import { Settings } from '@mui/icons-material';
 
-import { createStore} from 'redux';
-import {Provider, useSelector, useDispatch, connect} from 'react-redux';
-
-// PROPS ==============================================================
 export interface FretboardProps {
     rootNote: string
     selectedIntervals: Set<string>,
@@ -28,11 +24,9 @@ interface FretProps {
     settings: FretboardProps
 }
 
-
-// FRET COMPONENT ===========================================================
 const Fret = (props: FretProps) => {
     // interval symbol for the given note 
-    const intervalSymbol:string = intervalToSymbol[props.settings.noteToInterval[props.note]];
+    const intervalSymbol = intervalToSymbol[props.settings.noteToInterval[props.note]];
 
     return (
         <div 
@@ -54,8 +48,6 @@ const Fret = (props: FretProps) => {
     )
 }
 
-
-// STRING COMPONENT ==========================================================
 const String = (props: StringProps) => {
     return(
         <div 
@@ -79,18 +71,12 @@ const String = (props: StringProps) => {
     )
 }
 
-
-
-// FRETBOARD COMPONENT =======================================================
-// Structure:
-// <Fretboard/>
-//      <String/>
-//          <Fret/>
-//          ...
-///      ...
-
 const Fretboard = (props: FretboardProps) => {
     var tuning:string[] = ['E','A','D','G','B','E'];
+
+
+
+
     return (
         <div className="fretboard">
             { tuning.slice(0).reverse().map( (note, i) => {
