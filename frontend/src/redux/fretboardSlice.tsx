@@ -33,11 +33,11 @@ export const fretboardSlice = createSlice({
         setNumFrets: (state, action: PayloadAction<number>) => {
             state.numFrets = action.payload;
         },
-        setAccidental: (state, action: PayloadAction<Accidental>) => {
-            state.accidental = action.payload;
-          },
-        setDisplayMode: (state, action: PayloadAction<DisplayMode>) => {
-            state.displayMode = action.payload;
+        toggleAccidental: (state) => {
+            state.accidental = state.accidental === Accidental.Flat ? Accidental.Sharp : Accidental.Flat;
+        },
+        toggleDisplayMode: (state) => {
+            state.displayMode = state.displayMode === DisplayMode.Note ? DisplayMode.Interval : DisplayMode.Note;
         },
         setRootNote: (state, action: PayloadAction<string>) => {
             state.rootNote = action.payload; 
@@ -59,7 +59,13 @@ export const fretboardSlice = createSlice({
 });
 
 // this is for dispatch
-export const { setRootNote, toggleSelectedInterval } = fretboardSlice.actions;
+export const {  setTuning, 
+                setNumFrets,
+                toggleAccidental,
+                toggleDisplayMode,
+                setRootNote, 
+                toggleSelectedInterval,
+             } = fretboardSlice.actions;
 
 // this is for configureStore
 export default fretboardSlice.reducer;
