@@ -4,6 +4,7 @@ import { DisplayMode, Accidental } from '../util/enums';
 
 export interface FretboardState {
     tuning: string[]
+    numFrets: number
     accidental: Accidental
     displayMode: DisplayMode
     rootNote: string
@@ -12,6 +13,7 @@ export interface FretboardState {
 
 const initialState: FretboardState = {
     tuning: ['E','A','D','G','B','E'],
+    numFrets: 15,
     accidental: Accidental.Flat,
     displayMode: DisplayMode.Interval,
     rootNote: 'C',
@@ -25,6 +27,12 @@ export const fretboardSlice = createSlice({
     name: 'fretboard-setting',
     initialState,
     reducers:  {
+        setTuning: (state, action: PayloadAction<string[]>) => {
+            state.tuning = action.payload;
+        },
+        setNumFrets: (state, action: PayloadAction<number>) => {
+            state.numFrets = action.payload;
+        },
         setAccidental: (state, action: PayloadAction<Accidental>) => {
             state.accidental = action.payload;
           },

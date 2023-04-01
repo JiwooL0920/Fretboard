@@ -3,10 +3,8 @@ import {DisplayMode} from '../util/enums';
 import {getIntervalNoteFromRootNote, getNote, intervalToSymbol} from '../util/logic'
 import '../css/fretboard.css';
 
-
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import * as fretboardSlice from '../redux/fretboardSlice'
-
 import { RootState } from '../redux/store';
 
 // PROPS ==============================================================
@@ -33,8 +31,9 @@ interface FretProps {
 const Fretboard = () => {
     // REDUX
     const fretboardSetting = useSelector<RootState, fretboardSlice.FretboardState>(state => state.fretboard);
-    const dispatch = useDispatch();
 
+    // Dictionary that maps selected notes and its interval symbol
+    // ex. {'C':'1', 'E':'3', 'G':'5'}
     const notesToDisplay: {[key: string]: string} = {};
     for (const interval of fretboardSetting.selectedIntervals) {
         const note:string = getIntervalNoteFromRootNote(fretboardSetting.rootNote,interval);
@@ -51,7 +50,7 @@ const Fretboard = () => {
                 string-number={props.stringNumber}
                 string-note={props.stringNote}
             >
-                { [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15].map( (i:number) => {
+                { Array.from({ length: fretboardSetting.numFrets + 1 }, (_, index) => index).map( (i:number) => {
                     const fretProps:FretProps = {
                         stringNumber: props.stringNumber,
                         fretNumber:i, 
@@ -86,7 +85,7 @@ const Fretboard = () => {
     }
 
 
-    
+    // Fretboard component 
     return (
         <div className="fretboard">
             { fretboardSetting.tuning.slice(0).reverse().map( (note, i) => {
