@@ -1,10 +1,11 @@
 import Fretboard from '../components/Fretboard'
 import {notesFlat, notesSharp, intervalToSymbol} from '../util/logic'
-import {Accidental} from '../util/enums'
+import {Accidental, DisplayMode} from '../util/enums'
 import Button from '@mui/material/Button';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
+import Grid from '@mui/material/Grid';
 
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
@@ -74,14 +75,29 @@ const IntervalPage = () => {
     }
 
 
+
+    
+
     return (
         <div className="interval-page">
             <h1>Interval Page</h1>
-            <FormControlLabel 
-                control={<Switch defaultChecked />}
-                label="Interval" 
-                onChange={() => dispatch(fretboardSlice.toggleDisplayMode())}
-            />
+            <Grid component="label" container alignItems="center" justifyContent="center" spacing={1} 
+                  sx={{ fontSize: 28, margin:3 }}
+            >
+                <Grid item>Note</Grid>
+                <Grid item>
+                    <Switch
+                        // sx={{ width: 60, height: 40 }}
+                        checked={fretboardSetting.displayMode === DisplayMode.Interval ? true : false}
+                        onChange={() => dispatch(fretboardSlice.toggleDisplayMode())} 
+                        value="checked" 
+                    />
+                </Grid>
+                <Grid item>Interval</Grid>
+            </Grid>
+
+
+
             <Fretboard />        
             {createRootNoteButtons()}
             {createIntervalButtons()}
@@ -91,5 +107,7 @@ const IntervalPage = () => {
 
     )
 }
+
+
 
 export default IntervalPage

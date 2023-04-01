@@ -13,7 +13,7 @@ export interface FretboardState {
 
 const initialState: FretboardState = {
     tuning: ['E','A','D','G','B','E'],
-    numFrets: 15,
+    numFrets: 22,
     accidental: Accidental.Flat,
     displayMode: DisplayMode.Interval,
     rootNote: 'C',
