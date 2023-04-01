@@ -18,7 +18,7 @@ const initialState: IntervalPageState = {
 
 
 export const intervalPageSlice = createSlice({
-    name: 'fretboard-setting',
+    name: 'intervalPage-setting',
     initialState,
     reducers:  {
         setRootNote: (state, action: PayloadAction<string>) => {

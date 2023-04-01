@@ -1,12 +1,11 @@
 import React from 'react'
 import {DisplayMode} from '../util/enums';
-import {getIntervalNoteFromRootNote, getNote, intervalToSymbol} from '../util/intervalLogic'
+import { getNote, intervalToSymbol} from '../util/intervalLogic'
 import '../css/fretboard.css';
 import { useLocation } from "react-router-dom";
 
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import * as intervalPageSlice from '../redux/intervalPageSlice'
 import * as fretboardSlice from '../redux/fretboardSlice'
 
 // PROPS ==============================================================
@@ -30,21 +29,10 @@ interface FretProps {
 //          ...
 ///      ...
 
-const Fretboard = () => {
+const Fretboard = (pageState: any) => {
+
     const location = useLocation();
     const fretboardState = useSelector<RootState, fretboardSlice.FretboardState>(state => state.fretboard);
-
-    let pageState: any = null; 
-    switch (location.pathname) {
-        case '/interval':
-          pageState = useSelector<RootState, intervalPageSlice.IntervalPageState>(state => state.intervalPage);
-          break;
-        default:
-          throw new Error(`Unknown page: ${location.pathname}`);
-      }
-
-      
-      
 
     // STRING COMPONENT ==========================================================
     const String = (props: StringProps) => {
@@ -84,8 +72,17 @@ const Fretboard = () => {
                 }
                 fret-number={props.fretNumber} 
                 fret-note={props.note} 
-                interval-symbol={intervalToSymbol[pageState.selectedIntervals[pageState.notesToDisplay.indexOf(props.note)]]}
-                style={{ "--noteOpacity": pageState.notesToDisplay.includes(props.note) ? 1 : 0 } as React.CSSProperties}
+                interval-symbol={
+                    location.pathname === '/interval'
+                    ? intervalToSymbol[pageState.selectedIntervals[pageState.notesToDisplay.indexOf(props.note)]]
+                    : ""
+                }
+                style={{ "--noteOpacity": 
+                        (pageState.notesToDisplay.includes(props.note) && 
+                            (location.pathname === '/fretgame' ? props.stringNumber === pageState.targetString : true) // if path is fretgame check if string is target string 
+                        ) 
+                        ? 1 
+                        : 0 } as React.CSSProperties}
             >
             </div>
         )

@@ -24,7 +24,7 @@ const HomePage = () => {
                         imgLink: route.imgLink
                     } 
 
-                    return <MenuCard {...props}/>
+                    return <MenuCard key={route.path} {...props}/>
                 })}
             </Grid>
         </div>

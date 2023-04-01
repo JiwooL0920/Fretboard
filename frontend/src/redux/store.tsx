@@ -3,6 +3,7 @@ import { getDefaultMiddleware } from '@reduxjs/toolkit';
 // Slice
 import fretboardSlice from './fretboardSlice';
 import intervalPageSlice from './intervalPageSlice';
+import fretGamePageSlice from './fretGamePageSlice';
 
 // Suppress some error message
 const customizedMiddleware = getDefaultMiddleware({
@@ -12,7 +13,8 @@ const customizedMiddleware = getDefaultMiddleware({
 export const store = configureStore({
   reducer: {
     fretboard: fretboardSlice,
-    intervalPage: intervalPageSlice
+    intervalPage: intervalPageSlice,
+    fretGamePage: fretGamePageSlice
   },
   middleware: customizedMiddleware
 })

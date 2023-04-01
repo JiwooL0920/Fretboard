@@ -96,7 +96,7 @@ const IntervalPage = () => {
 
 
 
-            <Fretboard/>        
+            <Fretboard {...intervalPageState}/>        
 
 
             {createRootNoteButtons()}
