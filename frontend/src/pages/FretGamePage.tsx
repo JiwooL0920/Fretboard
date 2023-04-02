@@ -30,14 +30,20 @@ const FretGamePage = () => {
         <div>
             <h1>Fretboard Memorization Game</h1>
             <Box 
-                sx={{   backgroundColor: "##e7e6e5", 
-                        color: "#711a39", 
-                        fontSize: 80, 
+                sx={{   // backgroundColor: '#303233',
+                        color: "##e7e6e5", 
+                        fontSize: 40, 
                         fontWeight: "bold",
                         width: "70%",
                         margin: "0 auto",
+                        display: "flex",
+                        justifyContent: "space-evenly",
+                        borderRadius: 5,                        
             }}>
-                {fretGamePageState.notesToDisplay}
+                <div style={{display:"inline-block", alignSelf: "flex-end"}}>{"Time Left: " + fretGamePageState.time}</div>
+                <div style={{color:"#711a39", fontSize:80}}>{fretGamePageState.notesToDisplay}</div>
+                <div style={{display:"inline-block", alignSelf: "flex-end"}}>{"Score: " + fretGamePageState.score}</div>
+                
             </Box>
 
             <TimeBar time={fretGamePageState.time}/>
