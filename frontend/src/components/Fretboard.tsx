@@ -64,6 +64,7 @@ const Fretboard = (pageState: any) => {
         return (
             <div 
                 className={
+                    // code for drawing position mark
                     "fret" 
                     + (props.stringNumber === 1 && [3,5,7,9,15,17,19,21].includes(props.fretNumber) ? ' singlePositionMark' : '')
                     + (props.stringNumber === 1 && props.fretNumber === 12 ? ' doublePositionMarkTop' : '')

@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 export interface FretGamePageState {
-    isGameRunning: boolean,
+    isGameRunning: boolean
     score: number
+    time: number
     notesToDisplay: string[]
     targetString: number
 }
@@ -10,6 +11,7 @@ export interface FretGamePageState {
 const initialState: FretGamePageState = {
     isGameRunning: false, 
     score: 0,
+    time: 10,
     notesToDisplay: ["C"],
     targetString: 6
 }
@@ -27,9 +29,15 @@ export const fretGamePageSlice = createSlice({
         setScore: (state, action: PayloadAction<number>) => {
             state.score = action.payload;
         },
+        setTime: (state, action: PayloadAction<number>) => {
+            state.time = action.payload;
+        },
+        decrementTime: (state) => {
+            state.time -= 1; 
+        },
         setTargetString: (state, action: PayloadAction<number>) => {
             state.targetString = action.payload;
-        }
+        },
                  
     }
 });
@@ -37,6 +45,8 @@ export const fretGamePageSlice = createSlice({
 // this is for dispatch
 export const {  setIsGameRunning,
                 setScore,
+                setTime,
+                decrementTime,
                 setTargetString
              } = fretGamePageSlice.actions;
 
