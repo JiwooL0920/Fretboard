@@ -20,57 +20,6 @@ interface FretProps {
     note: string
 }
 
-export interface FretboardProps {
-    page: string
-    displayMode: DisplayMode
-    numStrings: number
-    numFrets: number 
-    stringRange: number[]
-    fretRange: number[] 
-    rootNote: string
-    notesToDisplay: { [key: string]: string }
-}
-
-
-/*
-
-props: FretboardProps {
-    page: /fretgame,
-    displayMode: DisplayMode.Note,
-    numStrings: 6,
-    numFrets: 22 
-    stringRange: [1,6],
-    fretRange: [0,22],
-    rootNote: None,
-    notesToDisplay: { "C":"N/A" },
-}
-
-props: FretboardProps {
-    page: /interval,
-    displayMode: DisplayMode.Interval
-    numStrings: 6,
-    numFrets: 22     
-    stringRange: [1,6],
-    fretRange: [0,22],
-    rootNote: "C",
-    notesToDisplay: { "C":"1", "E":"3", "G":"5"}
-}
-
-
-props: FretboardProps {
-    page: /scale,
-    displayMode: DisplayMode.Note
-    numStrings: 6,
-    numFrets: 22     
-    stringRange: [1,6],
-    fretRange: [0,23],
-    rootNote: "C",
-    notesToDisplay: { "C":"1", "Eb":"b3", "F":"4", "G":"5", "Bb":"b7"}
-}
-
-
-*/
-
 
 // FRETBOARD COMPONENT =======================================================
 // Structure:
@@ -80,13 +29,10 @@ props: FretboardProps {
 //          ...
 ///      ...
 
-const Fretboard = (props: FretboardProps) => {
+const FretboardGame = (pageState: any) => {
+
+    const location = useLocation();
     const fretboardState = useSelector<RootState, fretboardSlice.FretboardState>(state => state.fretboard);
-
-    const setting: FretboardProps = props 
-    console.log(setting)
-
-    const hasIntervalMode: boolean = ["/interval","/scale"].includes(setting.page)
 
     // STRING COMPONENT ==========================================================
     const String = (props: StringProps) => {
@@ -111,10 +57,6 @@ const Fretboard = (props: FretboardProps) => {
 
     // FRET COMPONENT ===========================================================
     const Fret = (props: FretProps) => {
-        const intervalOptions = 
-            (props.note === setting.rootNote ? ' root-note' : '') // is it root note?
-            + (setting.displayMode === DisplayMode.Interval ? ' interval-selected' : '') // if display mode is Interval, add the attribute 
-
         return (
             <div 
                 className={
@@ -123,12 +65,16 @@ const Fretboard = (props: FretboardProps) => {
                     + (props.stringNumber === 1 && [3,5,7,9,15,17,19,21].includes(props.fretNumber) ? ' singlePositionMark' : '')
                     + (props.stringNumber === 1 && props.fretNumber === 12 ? ' doublePositionMarkTop' : '')
                     + (props.stringNumber === 6 && props.fretNumber === 12 ? ' doublePositionMarkBottom' : '')
-                    + (hasIntervalMode ? intervalOptions : '')
                 }
                 fret-number={props.fretNumber} 
                 fret-note={props.note} 
-                interval-symbol={ hasIntervalMode ? setting.notesToDisplay[props.note] : "@"}
-                style={{ "--noteOpacity": props.note in setting.notesToDisplay ? 1 : 0 } as React.CSSProperties}
+                style={{ "--noteOpacity": 
+                        (pageState.notesToDisplay.includes(props.note) && 
+                            (location.pathname === '/fretgame' ? props.stringNumber === pageState.targetString : true) // if path is fretgame check if string is target string 
+                        ) 
+                        ? 1 
+                        : 0 } as React.CSSProperties}
+                // onClick=
             >
             </div>
         )
@@ -150,4 +96,4 @@ const Fretboard = (props: FretboardProps) => {
     
 }
 
-export default Fretboard
+export default FretboardGame

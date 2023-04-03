@@ -3,7 +3,7 @@ import React from 'react'
 import Box from '@mui/material/Box';
 
 
-import Fretboard from '../components/Fretboard'
+import FretboardGame from '../components/FretboardGame'
 import TimeBar from '../components/subcomponents/TimeBar';
 
 // REDUX
@@ -47,7 +47,7 @@ const FretGamePage = () => {
             </Box>
 
             <TimeBar time={fretGamePageState.time}/>
-            <Fretboard {...fretGamePageState}/>
+            {/* <FretboardGame {...fretGamePageState}/> */}
         </div>
 
         

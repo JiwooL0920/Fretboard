@@ -68,4 +68,13 @@ export const getIntervalNoteFromRootNote = (rootNote:string, interval:string):st
     return notes[i]
 }
 
+export const getNotesToDisplay = (rootNote:string, intervalList: string[]): { [key: string]: string } => {
+    const result:{ [key: string]: string } = {}
+    for (const interval of intervalList) {
+        const note:string = getIntervalNoteFromRootNote(rootNote,interval);
+        result[note] = intervalToSymbol[interval];
+    }
+    return result 
+}
+
 // export default logic

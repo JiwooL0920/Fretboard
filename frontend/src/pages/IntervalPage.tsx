@@ -1,5 +1,5 @@
-import Fretboard from '../components/Fretboard'
-import {notesFlat, notesSharp, intervalToSymbol} from '../util/intervalLogic'
+import Fretboard, {FretboardProps} from '../components/Fretboard'
+import {notesFlat, notesSharp, intervalToSymbol, getNotesToDisplay} from '../util/logic'
 import {Accidental, DisplayMode} from '../util/enums'
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
@@ -15,7 +15,20 @@ const IntervalPage = () => {
     // REDUX
     const fretboardState = useSelector<RootState, fretboardSlice.FretboardState>(state => state.fretboard);
     const intervalPageState = useSelector<RootState, intervalPageSlice.IntervalPageState>(state => state.intervalPage);
+
     const dispatch = useDispatch();
+
+
+    const fretboardProps: FretboardProps = {
+        page: "/interval",
+        displayMode: fretboardState.displayMode,
+        numStrings: fretboardState.numStrings,
+        numFrets: fretboardState.numFrets,     
+        stringRange: [1,6],
+        fretRange: [0,22],
+        rootNote: intervalPageState.rootNote,
+        notesToDisplay: getNotesToDisplay(intervalPageState.rootNote, intervalPageState.selectedIntervals)
+    }
     
 
     const createRootNoteButtons = () => {
@@ -96,7 +109,7 @@ const IntervalPage = () => {
 
 
 
-            <Fretboard {...intervalPageState}/>        
+            <Fretboard {...fretboardProps}/>        
 
 
             {createRootNoteButtons()}
