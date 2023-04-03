@@ -50,11 +50,6 @@ export const intervalSymbolToName : {[key: string]: string} = {
     // "13th" : 19
 }
 
-export const scaleToInterval: { [key: string]: string[] } = {
-    "Minor Pentatonic": ["1", "b3", "4", "5", "b7"],
-    "Blues Scale": ["1", "b3", "4", "b5", "5", "b7"]
-}
-
 var accidental:Accidental.Sharp;
 
 var tuning:string[] = ['E','A','D','G','B','E'];
@@ -82,6 +77,42 @@ export const getNotesToDisplayFromIntervals = (rootNote:string, intervalList: st
     }
     return result 
 }
+
+
+
+
+
+
+
+
+// Scale ===================================================================
+export const scaleToInterval: { [key: string]: string[] } = {
+    "Major (Ionian)": ["1", "2", "3", "4", "5", "6", "7"],
+    "Dorian": ["1", "2", "b3", "4", "5", "6", "b7"],
+    "Phrygian": ["1", "b2", "b3", "4", "5", "b6", "b7"],
+    "Lydian": ["1", "2", "3", "b5", "5", "6", "7"],
+    "Mixolydian": ["1", "2", "3", "4", "5", "6", "b7"],
+    "Aeolian": ["1", "2", "b3", "4", "5", "b6", "b7"],
+    "Locarian": ["1", "b2", "b3", "4", "b5", "b6", "b7"],
+
+    "Natural Minor": ["1", "2", "b3", "4", "5", "b6", "b7"],
+    "Harmonic Minor": ["1", "2", "b3", "4", "5", "b6", "7"],
+    "Melodic Minor": ["1", "2", "b3", "4", "5", "6", "7"],
+
+    "Major Pentatonic": ["1", "2", "3", "5", "6"],
+    "Minor Pentatonic": ["1", "b3", "4", "5", "b7"],
+    "Blues Scale": ["1", "b3", "4", "b5", "5", "b7"]
+}
+
+// position 1 has root note on 1st, 4th and 6th strings
+export const positionToStringNumber: { [key: number]: number[] } = {
+    1: [1, 4, 6],
+    2: [2, 4],
+    3: [2, 5],
+    4: [3, 5],
+    5: [1, 3, 6]
+}
+
 
 export const getNotesToDisplayFromScale = (rootNote:string, scale: string): { [key: string]: string } => {
     const result: { [key: string]: string } = {}
