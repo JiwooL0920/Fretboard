@@ -7,7 +7,7 @@ export interface IntervalPageState {
 
 const initialState: IntervalPageState = {
     rootNote: 'C',
-    selectedIntervals: ["Root", "Major Third", "Perfect Fifth"],
+    selectedIntervals: ["1", "3", "5"],
 }
 
 
@@ -22,7 +22,7 @@ export const intervalPageSlice = createSlice({
         },
         toggleSelectedInterval: (state, action: PayloadAction<string>) => {
             const interval = action.payload;
-            if (interval === "Root") { return; } // if "Root", don't toggle
+            if (interval === "1") { return; } // if "Root", don't toggle
             const index = state.selectedIntervals.indexOf(action.payload);
             if (index === -1) {
               state.selectedIntervals.push(action.payload); // add interval if it's not already in the array

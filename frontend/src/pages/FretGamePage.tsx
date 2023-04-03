@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 
 
 import Fretboard, {FretboardProps} from '../components/Fretboard'
-import {getNotesToDisplay} from '../util/logic'
+import {getNotesToDisplayFromIntervals} from '../util/logic'
 import TimeBar from '../components/subcomponents/TimeBar';
 
 
@@ -32,7 +32,7 @@ const FretGamePage = () => {
         stringRange: [1,6],
         fretRange: [0,22],
         rootNote: fretGamePageState.note,
-        notesToDisplay:  getNotesToDisplay(fretGamePageState.note, ["Root"])
+        notesToDisplay:  getNotesToDisplayFromIntervals(fretGamePageState.note, ["Root"])
     }
     
 

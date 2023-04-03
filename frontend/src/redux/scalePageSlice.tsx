@@ -3,7 +3,6 @@ import { createSlice, PayloadAction} from '@reduxjs/toolkit';
 export interface ScalePageState {
     rootNote: string
     selectedScale: string
-    notesToDisplay: string[]
     displayAllPosition: boolean 
     position: number
 }
@@ -11,7 +10,6 @@ export interface ScalePageState {
 const initialState: ScalePageState = {
     rootNote: 'C',
     selectedScale: "Pentatonic",
-    notesToDisplay: ["C", "Eb", "F", "G", "Bb"],
     displayAllPosition: true,
     position: 1
 }
@@ -25,13 +23,7 @@ export const scalePageSlice = createSlice({
     reducers:  {
         setRootNote: (state, action: PayloadAction<string>) => {
             state.rootNote = action.payload; 
-            scalePageSlice.caseReducers.getNotesToDisplay(state);
         },
-
-        getNotesToDisplay: (state) => {
-
-        },
-        
                  
     }
 });

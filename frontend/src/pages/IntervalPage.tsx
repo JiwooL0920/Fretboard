@@ -1,5 +1,5 @@
 import Fretboard, {FretboardProps} from '../components/Fretboard'
-import {notesFlat, notesSharp, intervalToSymbol, getNotesToDisplay} from '../util/logic'
+import {notesFlat, notesSharp, intervalSymbolToName, getNotesToDisplayFromIntervals} from '../util/logic'
 import {Accidental, DisplayMode} from '../util/enums'
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
@@ -27,7 +27,7 @@ const IntervalPage = () => {
         stringRange: [1,6],
         fretRange: [0,22],
         rootNote: intervalPageState.rootNote,
-        notesToDisplay: getNotesToDisplay(intervalPageState.rootNote, intervalPageState.selectedIntervals)
+        notesToDisplay: getNotesToDisplayFromIntervals(intervalPageState.rootNote, intervalPageState.selectedIntervals)
     }
     
 
@@ -61,7 +61,7 @@ const IntervalPage = () => {
     const createIntervalButtons = () => {
         return(
             <div className="intervalButtons">
-                {Object.keys(intervalToSymbol).map((interval:string) => {
+                {Object.keys(intervalSymbolToName).map((interval:string) => {
                     return (
                         <Button
                             key={interval}
@@ -77,7 +77,7 @@ const IntervalPage = () => {
                             }}
                             onClick={() => { dispatch(intervalPageSlice.toggleSelectedInterval(interval)) }}
                         >
-                            {interval}
+                            {intervalSymbolToName[interval]}
                         </Button>
                     )
                 })}

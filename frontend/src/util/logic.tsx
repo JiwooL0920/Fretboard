@@ -3,20 +3,21 @@ import {Accidental} from './enums';
 export const notesSharp:string[] = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 export const notesFlat:string[] = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
 
+
 export const intervalToSemitone : {[key: string]: number} = {
-    "Root": 0,
-    "Minor Second" : 1, 
-    "Major Second" : 2, 
-    "Minor Third" : 3,  
-    "Major Third" : 4,  
-    "Perfect Fourth" : 5,
-    "Diminished Fifth" : 6, 
-    "Perfect Fifth": 7,
-    "Minor Sixth" : 8, 
-    "Major Sixth" : 9, 
-    "Minor 7th" : 10, 
-    "Major Seventh" : 11,
-    "Octaves" : 12,
+    "1": 0,
+    "b2" : 1, 
+    "2" : 2, 
+    "b3" : 3,  
+    "3" : 4,  
+    "4" : 5,
+    "b5" : 6, 
+    "5": 7,
+    "b6" : 8, 
+    "6" : 9, 
+    "b7" : 10, 
+    "7" : 11,
+    "8" : 12,
     // "Minor 9th" : 13,
     // "Major 9th" : 14, 
     // "Aug 9th" : 15, 
@@ -26,20 +27,20 @@ export const intervalToSemitone : {[key: string]: number} = {
     // "13th" : 19
 }
 
-export const intervalToSymbol : {[key: string]: string} = {
-    "Root" : "1",
-    "Minor Second" : "b2", 
-    "Major Second" : "2", 
-    "Minor Third" : "b3",  
-    "Major Third" : "3",  
-    "Perfect Fourth" : "4",
-    "Diminished Fifth" : "b5", 
-    "Perfect Fifth": "5",
-    "Minor Sixth" : "b6", 
-    "Major Sixth" : "6", 
-    "Minor 7th" : "b7", 
-    "Major Seventh" : "7",
-    "Octaves" : "8",
+export const intervalSymbolToName : {[key: string]: string} = {
+    "1" : "Root",
+    "b2" : "Minor Second", 
+    "2" : "Major Second", 
+    "b3" : "Minor Third",  
+    "3" : "Major Third",  
+    "4" : "Perfect Fourth",
+    "b5" : "Diminished Fifth", 
+    "5" : "Perfect Fifth",
+    "b6" : "Minor Sixth", 
+    "6" : "Major Sixth", 
+    "b7" : "Minor 7th", 
+    "7" : "Major Seventh",
+    "8" : "Octaves",
     // "Minor 9th" : 13,
     // "Major 9th" : 14, 
     // "Aug 9th" : 15, 
@@ -47,6 +48,11 @@ export const intervalToSymbol : {[key: string]: string} = {
     // "Aug 11th" : 17,
     // "Minor 13th" : 18, 
     // "13th" : 19
+}
+
+export const scaleToInterval: { [key: string]: string[] } = {
+    "Minor Pentatonic": ["1", "b3", "4", "5", "b7"],
+    "Blues Scale": ["1", "b3", "4", "b5", "5", "b7"]
 }
 
 var accidental:Accidental.Sharp;
@@ -68,13 +74,21 @@ export const getIntervalNoteFromRootNote = (rootNote:string, interval:string):st
     return notes[i]
 }
 
-export const getNotesToDisplay = (rootNote:string, intervalList: string[]): { [key: string]: string } => {
+export const getNotesToDisplayFromIntervals = (rootNote:string, intervalList: string[]): { [key: string]: string } => {
     const result:{ [key: string]: string } = {}
     for (const interval of intervalList) {
         const note:string = getIntervalNoteFromRootNote(rootNote,interval);
-        result[note] = intervalToSymbol[interval];
+        result[note] = interval;
     }
     return result 
 }
 
-// export default logic
+export const getNotesToDisplayFromScale = (rootNote:string, scale: string): { [key: string]: string } => {
+    const result: { [key: string]: string } = {}
+    for (const interval of scaleToInterval[scale]) {
+        const note:string = getIntervalNoteFromRootNote(rootNote, interval);
+        result[note] = interval;
+    }
+    return result 
+}
+
