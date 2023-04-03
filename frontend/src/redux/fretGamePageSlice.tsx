@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { DisplayMode } from '../util/enums';
 
 export interface FretGamePageState {
+    displayMode: DisplayMode
     isGameRunning: boolean
     score: number
     time: number
@@ -9,6 +11,7 @@ export interface FretGamePageState {
 }
 
 const initialState: FretGamePageState = {
+    displayMode: DisplayMode.Note,
     isGameRunning: false, 
     score: 0,
     time: 10,

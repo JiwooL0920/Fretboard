@@ -26,7 +26,7 @@ const FretGamePage = () => {
 
     const fretboardProps: FretboardProps = {
         page: "/fretgame",
-        displayMode: fretboardState.displayMode,
+        displayMode: fretGamePageState.displayMode,
         numStrings: fretboardState.numStrings,
         numFrets: fretboardState.numFrets,     
         stringRange: [1,6],

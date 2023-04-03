@@ -18,10 +18,9 @@ const IntervalPage = () => {
 
     const dispatch = useDispatch();
 
-
     const fretboardProps: FretboardProps = {
         page: "/interval",
-        displayMode: fretboardState.displayMode,
+        displayMode: intervalPageState.displayMode,
         numStrings: fretboardState.numStrings,
         numFrets: fretboardState.numFrets,     
         stringRange: [1,6],
@@ -99,8 +98,8 @@ const IntervalPage = () => {
                 <Grid item>
                     <Switch
                         // sx={{ width: 60, height: 40 }}
-                        checked={fretboardState.displayMode === DisplayMode.Interval ? true : false}
-                        onChange={() => dispatch(fretboardSlice.toggleDisplayMode())} 
+                        checked={intervalPageState.displayMode === DisplayMode.Interval ? true : false}
+                        onChange={() => dispatch(intervalPageSlice.toggleDisplayMode())} 
                         value="checked" 
                     />
                 </Grid>

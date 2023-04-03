@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { DisplayMode } from '../util/enums';
 
 export interface ScalePageState {
+    displayMode: DisplayMode
     rootNote: string
     scale: string
     displayAllPosition: boolean 
@@ -8,6 +10,7 @@ export interface ScalePageState {
 }
 
 const initialState: ScalePageState = {
+    displayMode: DisplayMode.Note,
     rootNote: 'C',
     scale: "Minor Pentatonic",
     displayAllPosition: true,
@@ -24,12 +27,16 @@ export const scalePageSlice = createSlice({
         setRootNote: (state, action: PayloadAction<string>) => {
             state.rootNote = action.payload; 
         },
+        setDisplayMode: (state, action: PayloadAction<DisplayMode>) => {
+            state.displayMode = action.payload; 
+        },
                  
     }
 });
 
 // this is for dispatch
 export const {  setRootNote, 
+                setDisplayMode,
              } = scalePageSlice.actions;
 
 // this is for configureStore

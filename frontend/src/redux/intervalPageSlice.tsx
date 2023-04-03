@@ -1,11 +1,14 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { DisplayMode } from '../util/enums';
 
 export interface IntervalPageState {
+    displayMode: DisplayMode
     rootNote: string
     selectedIntervals: string[]
 }
 
 const initialState: IntervalPageState = {
+    displayMode: DisplayMode.Interval,
     rootNote: 'C',
     selectedIntervals: ["1", "3", "5"],
 }
@@ -27,13 +30,21 @@ export const intervalPageSlice = createSlice({
             } else {
               state.selectedIntervals.splice(index, 1); // remove interval if it's already in the array
             }
-        },                 
+        },
+        toggleDisplayMode: (state) => {
+            state.displayMode = state.displayMode === DisplayMode.Note ? DisplayMode.Interval : DisplayMode.Note;
+        },
+        setDisplayMode: (state, action: PayloadAction<DisplayMode>) => {
+            state.displayMode = action.payload;
+        }            
     }
 });
 
 // this is for dispatch
 export const {  setRootNote, 
                 toggleSelectedInterval,
+                toggleDisplayMode,
+                setDisplayMode
              } = intervalPageSlice.actions;
 
 // this is for configureStore

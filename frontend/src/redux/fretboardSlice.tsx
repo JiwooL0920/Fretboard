@@ -1,12 +1,11 @@
 import { createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { DisplayMode, Accidental } from '../util/enums';
+import { Accidental } from '../util/enums';
 
 export interface FretboardState {
     tuning: string[]
     numStrings: number 
     numFrets: number
     accidental: Accidental
-    displayMode: DisplayMode
 }
 
 const initialState: FretboardState = {
@@ -14,7 +13,6 @@ const initialState: FretboardState = {
     numStrings: 6,
     numFrets: 22,
     accidental: Accidental.Flat,
-    displayMode: DisplayMode.Interval
 }
 
 
@@ -34,9 +32,6 @@ export const fretboardSlice = createSlice({
         toggleAccidental: (state) => {
             state.accidental = state.accidental === Accidental.Flat ? Accidental.Sharp : Accidental.Flat;
         },
-        toggleDisplayMode: (state) => {
-            state.displayMode = state.displayMode === DisplayMode.Note ? DisplayMode.Interval : DisplayMode.Note;
-        },
     }
 });
 
@@ -45,7 +40,6 @@ export const {  setTuning,
                 setNumStrings,
                 setNumFrets,
                 toggleAccidental,
-                toggleDisplayMode
              } = fretboardSlice.actions;
 
 // this is for configureStore

@@ -31,46 +31,6 @@ export interface FretboardProps {
 }
 
 
-/*
-
-props: FretboardProps {
-    page: /fretgame,
-    displayMode: DisplayMode.Note,
-    numStrings: 6,
-    numFrets: 22 
-    stringRange: [1,6],
-    fretRange: [0,22],
-    rootNote: None,
-    notesToDisplay: { "C":"N/A" },
-}
-
-props: FretboardProps {
-    page: /interval,
-    displayMode: DisplayMode.Interval
-    numStrings: 6,
-    numFrets: 22     
-    stringRange: [1,6],
-    fretRange: [0,22],
-    rootNote: "C",
-    notesToDisplay: { "C":"1", "E":"3", "G":"5"}
-}
-
-
-props: FretboardProps {
-    page: /scale,
-    displayMode: DisplayMode.Note
-    numStrings: 6,
-    numFrets: 22     
-    stringRange: [1,6],
-    fretRange: [0,23],
-    rootNote: "C",
-    notesToDisplay: { "C":"1", "Eb":"b3", "F":"4", "G":"5", "Bb":"b7"}
-}
-
-
-*/
-
-
 // FRETBOARD COMPONENT =======================================================
 // Structure:
 // <Fretboard/>
@@ -113,6 +73,12 @@ const Fretboard = (props: FretboardProps) => {
         const intervalOptions = 
             (props.note === setting.rootNote ? ' root-note' : '') // is it root note?
             + (setting.displayMode === DisplayMode.Interval ? ' interval-selected' : '') // if display mode is Interval, add the attribute 
+        
+        
+        const isStringInRange: boolean = props.stringNumber >= setting.stringRange[0] && props.stringNumber <= setting.stringRange[1];
+        const isFretInRange: boolean = props.fretNumber >= setting.fretRange[0] && props.fretNumber <= setting.fretRange[1];
+
+        const noteOpacity:number = ((props.note in setting.notesToDisplay) && isStringInRange && isFretInRange) ? 1 : 0
 
         return (
             <div 
@@ -127,7 +93,7 @@ const Fretboard = (props: FretboardProps) => {
                 fret-number={props.fretNumber} 
                 fret-note={props.note} 
                 interval-symbol={ hasIntervalMode ? setting.notesToDisplay[props.note] : "@"}
-                style={{ "--noteOpacity": props.note in setting.notesToDisplay ? 1 : 0 } as React.CSSProperties}
+                style={{ "--noteOpacity": noteOpacity} as React.CSSProperties}
             >
             </div>
         )
