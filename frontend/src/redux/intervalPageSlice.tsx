@@ -11,8 +11,6 @@ const initialState: IntervalPageState = {
 }
 
 
-
-
 export const intervalPageSlice = createSlice({
     name: 'intervalPage-setting',
     initialState,

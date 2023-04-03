@@ -2,14 +2,14 @@ import { createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 export interface ScalePageState {
     rootNote: string
-    selectedScale: string
+    scale: string
     displayAllPosition: boolean 
     position: number
 }
 
 const initialState: ScalePageState = {
     rootNote: 'C',
-    selectedScale: "Pentatonic",
+    scale: "Minor Pentatonic",
     displayAllPosition: true,
     position: 1
 }
