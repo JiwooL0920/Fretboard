@@ -4,7 +4,7 @@ export interface FretGamePageState {
     isGameRunning: boolean
     score: number
     time: number
-    notesToDisplay: string[]
+    note: string
     targetString: number
 }
 
@@ -12,7 +12,7 @@ const initialState: FretGamePageState = {
     isGameRunning: false, 
     score: 0,
     time: 10,
-    notesToDisplay: ["C"],
+    note: "C",
     targetString: 6
 }
 

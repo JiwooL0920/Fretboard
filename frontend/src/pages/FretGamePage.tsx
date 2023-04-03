@@ -3,8 +3,10 @@ import React from 'react'
 import Box from '@mui/material/Box';
 
 
-import FretboardGame from '../components/FretboardGame'
+import Fretboard, {FretboardProps} from '../components/Fretboard'
+import {getNotesToDisplay} from '../util/logic'
 import TimeBar from '../components/subcomponents/TimeBar';
+
 
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
@@ -20,12 +22,20 @@ const FretGamePage = () => {
     const fretboardState = useSelector<RootState, fretboardSlice.FretboardState>(state => state.fretboard);
     const fretGamePageState = useSelector<RootState, fretGamePageSlice.FretGamePageState>(state => state.fretGamePage);
 
-    const dispatch = useDispatch();
+    const note:string = fretGamePageState.note
 
+    const fretboardProps: FretboardProps = {
+        page: "/fretgame",
+        displayMode: fretboardState.displayMode,
+        numStrings: fretboardState.numStrings,
+        numFrets: fretboardState.numFrets,     
+        stringRange: [1,6],
+        fretRange: [0,22],
+        rootNote: fretGamePageState.note,
+        notesToDisplay:  getNotesToDisplay(fretGamePageState.note, ["Root"])
+    }
     
 
-      
-        
     return (
         <div>
             <h1>Fretboard Memorization Game</h1>
@@ -41,13 +51,13 @@ const FretGamePage = () => {
                         borderRadius: 5,                        
             }}>
                 <div style={{display:"inline-block", alignSelf: "flex-end"}}>{"Time Left: " + fretGamePageState.time}</div>
-                <div style={{color:"#711a39", fontSize:80}}>{fretGamePageState.notesToDisplay}</div>
+                <div style={{color:"#711a39", fontSize:80}}>{fretGamePageState.note}</div>
                 <div style={{display:"inline-block", alignSelf: "flex-end"}}>{"Score: " + fretGamePageState.score}</div>
                 
             </Box>
 
             <TimeBar time={fretGamePageState.time}/>
-            {/* <FretboardGame {...fretGamePageState}/> */}
+            <Fretboard {...fretboardProps}/>
         </div>
 
         

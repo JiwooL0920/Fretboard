@@ -1,5 +1,5 @@
 import React from 'react'
-import FretboardScalePage from '../components/FretboardScalePage'
+import Fretboard from '../components/Fretboard'
 
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';

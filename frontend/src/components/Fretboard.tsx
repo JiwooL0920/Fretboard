@@ -1,8 +1,7 @@
 import React from 'react'
 import {DisplayMode} from '../util/enums';
-import { getNote, intervalToSymbol} from '../util/logic'
+import { getNote } from '../util/logic'
 import '../css/fretboard.css';
-import { useLocation } from "react-router-dom";
 
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
