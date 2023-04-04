@@ -10,7 +10,7 @@ export interface IntervalPageState {
 const initialState: IntervalPageState = {
     displayMode: DisplayMode.Interval,
     rootNote: 'C',
-    selectedIntervals: ["1", "3", "5"],
+    selectedIntervals: ["1", "3", "5", "7"],
 }
 
 

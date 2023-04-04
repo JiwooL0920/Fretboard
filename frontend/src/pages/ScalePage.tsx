@@ -163,6 +163,7 @@ const ScalePage = () => {
                 </Grid>
                 <Grid item>Interval</Grid>
             </Grid>
+            
             <Fretboard {...fretboardProps}/>
             {createRootNoteButtons()}
             {createPositionButtons()}

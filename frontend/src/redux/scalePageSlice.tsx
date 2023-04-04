@@ -11,7 +11,7 @@ export interface ScalePageState {
 
 const initialState: ScalePageState = {
     displayMode: DisplayMode.Interval,
-    rootNote: 'C',
+    rootNote: 'A',
     scale: "Minor Pentatonic",
     displayAllPosition: true,
     position: 1
@@ -21,7 +21,7 @@ const initialState: ScalePageState = {
 
 
 export const scalePageSlice = createSlice({
-    name: 'intervalPage-setting',
+    name: 'scalePage-setting',
     initialState,
     reducers:  {
         setDisplayMode: (state, action: PayloadAction<DisplayMode>) => {
