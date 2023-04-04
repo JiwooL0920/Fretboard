@@ -30,7 +30,7 @@ const FretGamePage = () => {
         numStrings: fretboardState.numStrings,
         numFrets: fretboardState.numFrets,     
         stringRange: [1,6],
-        fretRange: [0,22],
+        fretRange: [[0,22]],
         rootNote: fretGamePageState.note,
         notesToDisplay:  getNotesToDisplayFromIntervals(fretGamePageState.note, ["Root"])
     }

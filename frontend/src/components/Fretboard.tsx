@@ -25,7 +25,7 @@ export interface FretboardProps {
     numStrings: number
     numFrets: number 
     stringRange: number[]
-    fretRange: number[] 
+    fretRange: number[][]
     rootNote: string
     notesToDisplay: { [key: string]: string }
 }
@@ -76,7 +76,13 @@ const Fretboard = (props: FretboardProps) => {
         
         
         const isStringInRange: boolean = props.stringNumber >= setting.stringRange[0] && props.stringNumber <= setting.stringRange[1];
-        const isFretInRange: boolean = props.fretNumber >= setting.fretRange[0] && props.fretNumber <= setting.fretRange[1];
+        var isFretInRange: boolean = false;
+        
+        for (const r of setting.fretRange) {
+            if (props.fretNumber >= r[0] && props.fretNumber <= r[1]) {
+                isFretInRange = true;
+            }
+        }
 
         const noteOpacity:number = ((props.note in setting.notesToDisplay) && isStringInRange && isFretInRange) ? 1 : 0
 

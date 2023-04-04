@@ -19,15 +19,14 @@ const ScalePage = () => {
     const scalePageState = useSelector<RootState, scalePageSlice.ScalePageState>(state => state.scalePage);
     const dispatch = useDispatch();
 
-    const getFretRange = (position: number):number[] => {
+    const getFretRange = (position: number):number[][] => {
         const targetStrings: number[] = positionToRootNoteStringNumber[position]
         const range:number[] = [100,-100];
 
         var startFromFret:number = 0;
-        // console.log(targetStrings)
         for (const string of targetStrings) {
             const fret:number = getFretNumberFromNoteAndString(scalePageState.rootNote, string, startFromFret);
-            console.log("string: ", string, " rootNote: ", scalePageState.rootNote, "fret: ", fret, " | startFromFret: ", startFromFret)
+            // console.log("string: ", string, " rootNote: ", scalePageState.rootNote, "fret: ", fret, " | startFromFret: ", startFromFret)
             range[0] = Math.min(range[0], fret) // set min
             range[1] = Math.max(range[1], fret) // set max
             startFromFret = (startFromFret === 0 ? fret : Math.min(startFromFret, fret))
@@ -39,7 +38,17 @@ const ScalePage = () => {
         range[0] = range[0] - offset[0] // adjust min
         range[1] = range[1] + offset[1] // adjust max 
 
-        return range;
+        // 12 frets = 1 octave, so see if we can fit the range an octave below or above
+        const result:number[][] = [range];
+        for (const octave of [-12,12]) {
+            const lowerBound:number = range[0] + octave;
+            const upperBound:number = range[1] + octave;
+            if (lowerBound >= 0 &&  upperBound <= fretboardState.numFrets) {
+                result.push([lowerBound, upperBound])
+            }
+        }
+        
+        return result;
     }
     
     const fretboardProps: FretboardProps = {
@@ -110,7 +119,7 @@ const ScalePage = () => {
 
     const createScaleButtons = () => {
         return(
-            <div className="scaleButtons" style={{width:"70%", margin: "0 auto"}}>
+            <div className="scaleButtons" style={{width:"60%", margin: "0 auto"}}>
                 { Object.keys(scaleToInterval).map((scale:string) => {
                     return (
                         <Button 
@@ -136,7 +145,7 @@ const ScalePage = () => {
     }
 
 
- 
+    // ScalePage
     return (
         <div className="scale-page">
             <h1>Scale Generator</h1>

@@ -24,7 +24,7 @@ const IntervalPage = () => {
         numStrings: fretboardState.numStrings,
         numFrets: fretboardState.numFrets,     
         stringRange: [1,6],
-        fretRange: [0,22],
+        fretRange: [[0,22]],
         rootNote: intervalPageState.rootNote,
         notesToDisplay: getNotesToDisplayFromIntervals(intervalPageState.rootNote, intervalPageState.selectedIntervals)
     }

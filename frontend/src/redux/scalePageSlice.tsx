@@ -11,7 +11,7 @@ export interface ScalePageState {
 
 const initialState: ScalePageState = {
     displayMode: DisplayMode.Interval,
-    rootNote: 'E',
+    rootNote: 'C',
     scale: "Minor Pentatonic",
     displayAllPosition: true,
     position: 1
