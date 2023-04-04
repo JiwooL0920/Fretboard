@@ -27,6 +27,9 @@ export const scalePageSlice = createSlice({
         setDisplayMode: (state, action: PayloadAction<DisplayMode>) => {
             state.displayMode = action.payload; 
         },
+        toggleDisplayMode: (state) => {
+            state.displayMode = state.displayMode === DisplayMode.Note ? DisplayMode.Interval : DisplayMode.Note;
+        },
         setRootNote: (state, action: PayloadAction<string>) => {
             state.rootNote = action.payload; 
         },    
@@ -41,6 +44,7 @@ export const scalePageSlice = createSlice({
 
 // this is for dispatch
 export const {  setDisplayMode, 
+                toggleDisplayMode,
                 setRootNote,
                 setScale,
                 setPosition,

@@ -90,7 +90,7 @@ const IntervalPage = () => {
 
     return (
         <div className="interval-page">
-            <h1>Interval Page</h1>
+            <h1>Interval Generator</h1>
             <Grid component="label" container alignItems="center" justifyContent="center" spacing={1} 
                   sx={{ fontSize: 28, margin:3 }}
             >

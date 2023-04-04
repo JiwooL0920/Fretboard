@@ -113,6 +113,15 @@ export const positionToStringNumber: { [key: number]: number[] } = {
     5: [1, 3, 6]
 }
 
+// position 1
+export const positionOffset: { [key: number]: number[] } = {
+    1: [0, 1],
+    2: [0, 0],
+    3: [1, 1],
+    4: [0, 1],
+    5: [1, 1]
+}
+
 
 export const getNotesToDisplayFromScale = (rootNote:string, scale: string): { [key: string]: string } => {
     const result: { [key: string]: string } = {}

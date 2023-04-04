@@ -3,6 +3,8 @@ import {notesFlat, notesSharp, getNotesToDisplayFromScale, positionToStringNumbe
 import {Accidental, DisplayMode} from '../util/enums'
 
 import Button from '@mui/material/Button';
+import Switch from '@mui/material/Switch';
+import Grid from '@mui/material/Grid';
 
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
@@ -68,6 +70,32 @@ const ScalePage = () => {
         );
     }
 
+    const createPositionButtons = () => {
+        return(
+            <div className="position-buttons">
+                { Object.keys(positionToStringNumber).map((position: string) => {
+                    return (
+                        <Button 
+                            key={position}
+                            sx={{
+                                width: 80,
+                                height: 80,
+                                margin: 1,
+                                color: '#FFFFFF',
+                                fontSize: 30,
+                                textTransform: 'none',
+                                backgroundColor: parseInt(position) === scalePageState.position ? '#485c7b' : '#303233',
+                                '&:hover': { backgroundColor: parseInt(position) === scalePageState.position ? '#3f506b' : '#1e252b'}
+                                
+                            }}
+                            onClick={() => dispatch(scalePageSlice.setPosition(parseInt(position)))}
+                        >
+                            {position}
+                        </Button>
+                    )})}
+            </div>
+        );
+    }
 
     const createScaleButtons = () => {
         return(
@@ -77,7 +105,7 @@ const ScalePage = () => {
                         <Button 
                             key={scale}
                             sx={{
-                                width: 300,
+                                width: 270,
                                 height: 80,
                                 margin: 1,
                                 color: '#FFFFFF',
@@ -97,41 +125,28 @@ const ScalePage = () => {
     }
 
 
-    const createPositionButtons = () => {
-        return(
-            <div className="position-buttons">
-                { Object.keys(positionToStringNumber).map((position: string) => {
-                    return (
-                        <Button 
-                            key={position}
-                            sx={{
-                                width: 300,
-                                height: 80,
-                                margin: 1,
-                                color: '#FFFFFF',
-                                fontSize: 30,
-                                textTransform: 'none',
-                                backgroundColor: parseInt(position) === scalePageState.position ? '#546961' : '#303233',
-                                '&:hover': { backgroundColor: parseInt(position) === scalePageState.position ? '#455750' : '#1e252b'}
-                                
-                            }}
-                            onClick={() => dispatch(scalePageSlice.setPosition(parseInt(position)))}
-                        >
-                            {position}
-                        </Button>
-                    )})}
-            </div>
-        );
-    }
-
-        
+ 
     return (
         <div className="scale-page">
-            <h1>ScalePage</h1>
+            <h1>Scale Generator</h1>
+            <Grid component="label" container alignItems="center" justifyContent="center" spacing={1} 
+                  sx={{ fontSize: 28, margin:3 }}
+            >
+                <Grid item>Note</Grid>
+                <Grid item>
+                    <Switch
+                        // sx={{ width: 60, height: 40 }}
+                        checked={scalePageState.displayMode === DisplayMode.Interval ? true : false}
+                        onChange={() => dispatch(scalePageSlice.toggleDisplayMode())} 
+                        value="checked" 
+                    />
+                </Grid>
+                <Grid item>Interval</Grid>
+            </Grid>
             <Fretboard {...fretboardProps}/>
             {createRootNoteButtons()}
-            {createScaleButtons()}
             {createPositionButtons()}
+            {createScaleButtons()}
         </div>
         
     )
