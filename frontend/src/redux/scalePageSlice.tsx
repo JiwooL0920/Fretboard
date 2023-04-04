@@ -10,8 +10,8 @@ export interface ScalePageState {
 }
 
 const initialState: ScalePageState = {
-    displayMode: DisplayMode.Note,
-    rootNote: 'C',
+    displayMode: DisplayMode.Interval,
+    rootNote: 'E',
     scale: "Minor Pentatonic",
     displayAllPosition: true,
     position: 1

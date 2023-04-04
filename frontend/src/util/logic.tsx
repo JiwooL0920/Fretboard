@@ -1,8 +1,14 @@
 import {Accidental} from './enums';
 
+// import * as fretboardSlice from '../redux/fretboardSlice'
+// import { RootState } from '../redux/store';
+// import { useSelector } from 'react-redux';
+
+
 export const notesSharp:string[] = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 export const notesFlat:string[] = ['C','Db','D','Eb','E','F','Gb','G','Ab','A','Bb','B'];
 
+// const fretboardState = useSelector<RootState, fretboardSlice.FretboardState>(state => state.fretboard);
 
 export const intervalToSemitone : {[key: string]: number} = {
     "1": 0,
@@ -92,10 +98,9 @@ export const scaleToInterval: { [key: string]: string[] } = {
     "Phrygian": ["1", "b2", "b3", "4", "5", "b6", "b7"],
     "Lydian": ["1", "2", "3", "b5", "5", "6", "7"],
     "Mixolydian": ["1", "2", "3", "4", "5", "6", "b7"],
-    "Aeolian": ["1", "2", "b3", "4", "5", "b6", "b7"],
+    "Minor (Aeolian)": ["1", "2", "b3", "4", "5", "b6", "b7"],
     "Locarian": ["1", "b2", "b3", "4", "b5", "b6", "b7"],
 
-    "Natural Minor": ["1", "2", "b3", "4", "5", "b6", "b7"],
     "Harmonic Minor": ["1", "2", "b3", "4", "5", "b6", "7"],
     "Melodic Minor": ["1", "2", "b3", "4", "5", "6", "7"],
 
@@ -105,23 +110,122 @@ export const scaleToInterval: { [key: string]: string[] } = {
 }
 
 // position 1 has root note on 1st, 4th and 6th strings
-export const positionToStringNumber: { [key: number]: number[] } = {
-    1: [1, 4, 6],
-    2: [2, 4],
+// leftmost element appears first on the fretboard 
+export const positionToRootNoteStringNumber: { [key: number]: number[] } = {
+    1: [1, 6, 4],
+    2: [4, 2],
     3: [2, 5],
-    4: [3, 5],
-    5: [1, 3, 6]
+    4: [5, 3],
+    5: [3, 1, 6]
 }
 
-// position 1
-export const positionOffset: { [key: number]: number[] } = {
-    1: [0, 1],
-    2: [0, 0],
-    3: [1, 1],
-    4: [0, 1],
-    5: [1, 1]
+// position 1 has root note on 1,4,6 strings
+// value means the left/right offset the position goes to.
+// ex. C Pentatonic Scale, Position 1
+// has root on (string 1, fret 8), (string 4, fret 10), (string 6, fret 8)
+// the range of frets that would have noteOpacity:1 is
+// min   max
+// [8+0, 10+1]
+// [8, 11]
+export const positionOffset: { [key: string]: { [key:number]: number[]} } = {
+    "Major (Ionian)": {   
+        1: [1, 0],
+        2: [1, 0],
+        3: [1, 0],
+        4: [1, 1],
+        5: [1, 0]
+    },
+    "Dorian": {
+        1: [1, 1],
+        2: [0, 0],
+        3: [1, 1],
+        4: [1, 1],
+        5: [0, 0]
+    },
+    "Phrygian": {
+        1: [0, 1],
+        2: [0, 1],
+        3: [1, 1],
+        4: [0, 1],
+        5: [0, 1]
+    },
+    "Lydian": {
+        1: [1, 0],
+        2: [1, 1],
+        3: [2, 0],
+        4: [1, 0],
+        5: [1, 0]
+    },
+    "Mixolydian": {
+        1: [1, 1],
+        2: [1, 0],
+        3: [1, 0],
+        4: [1, 1],
+        5: [0, 0]
+    },
+    "Minor (Aeolian)": {
+        1: [1, 1],
+        2: [0, 0],
+        3: [1, 1],
+        4: [0, 1],
+        5: [0, 1]
+    },   
+    "Locarian": {
+        1: [0, 1],
+        2: [0, 1],
+        3: [0, 1],
+        4: [0, 2],
+        5: [0, 1]
+    },     
+    "Harmonic Minor": {
+        1: [1, 1],
+        2: [1, 0],
+        3: [1, 1],
+        4: [1, 1],
+        5: [0, 1]
+    },    
+    "Melodic Minor": {
+        1: [1, 1],
+        2: [1, 0],
+        3: [1, 1],
+        4: [2, 1],
+        5: [1, 0]
+    },             
+    "Minor Pentatonic":{  
+        1: [0, 1],
+        2: [0, 0],
+        3: [1, 1],
+        4: [0, 1],
+        5: [0, 0]
+    },
+    "Major Pentatonic": { 
+        1: [1, 0],
+        2: [1, 0],
+        3: [1, 0],
+        4: [1, 0],
+        5: [0, 0]
+    },
+    "Blues Scale":{  
+        1: [0, 1],
+        2: [0, 1],
+        3: [1, 1],
+        4: [0, 2],
+        5: [0, 1]
+    },
+                                     
 }
 
+// given note and string, determine which fret the note occurs 
+// ex. note="C", string="6"
+// result="8"
+export const getFretNumberFromNoteAndString = (note:string, string:number, startFromFret:number): number => {
+    for (let fretNumber = startFromFret; fretNumber < 22+1; fretNumber++) {
+        if (getNote(string, fretNumber) === note) {
+            return fretNumber;
+        }
+    }
+    return 0;
+}
 
 export const getNotesToDisplayFromScale = (rootNote:string, scale: string): { [key: string]: string } => {
     const result: { [key: string]: string } = {}

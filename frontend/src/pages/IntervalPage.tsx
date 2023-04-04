@@ -59,17 +59,17 @@ const IntervalPage = () => {
 
     const createIntervalButtons = () => {
         return(
-            <div className="intervalButtons">
+            <div className="intervalButtons" style={{width:"70%", margin: "0 auto"}}>
                 {Object.keys(intervalSymbolToName).map((interval:string) => {
                     return (
                         <Button
                             key={interval}
                             sx={{
-                                width: 200,
+                                width: 250,
                                 height: 80,
                                 margin: 1,
                                 color: '#FFFFFF',
-                                fontSize: 20,
+                                fontSize: 30,
                                 textTransform: 'none',
                                 backgroundColor: intervalPageState.selectedIntervals.includes(interval) ? '#546961' : '#303233',
                                 '&:hover': { backgroundColor: intervalPageState.selectedIntervals.includes(interval) ? '#455750' : '#1e252b'},

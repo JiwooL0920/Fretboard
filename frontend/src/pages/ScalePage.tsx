@@ -1,5 +1,5 @@
 import Fretboard, { FretboardProps } from '../components/Fretboard'
-import {notesFlat, notesSharp, getNotesToDisplayFromScale, positionToStringNumber, scaleToInterval} from '../util/logic'
+import {notesFlat, notesSharp, getNotesToDisplayFromScale, positionToRootNoteStringNumber, scaleToInterval, getFretNumberFromNoteAndString, positionOffset} from '../util/logic'
 import {Accidental, DisplayMode} from '../util/enums'
 
 import Button from '@mui/material/Button';
@@ -19,17 +19,28 @@ const ScalePage = () => {
     const scalePageState = useSelector<RootState, scalePageSlice.ScalePageState>(state => state.scalePage);
     const dispatch = useDispatch();
 
-    // const getFretRange = (position: number):number[] => {
-    //     switch (position) {
-    //         case 1:
-    //         case 2:
-    //         case 3:
-    //         case 4:
-    //         case 5:
-    //         default:
-    //             throw new Error("Invalid scale position number: " + position);
-    //     }
-    // }
+    const getFretRange = (position: number):number[] => {
+        const targetStrings: number[] = positionToRootNoteStringNumber[position]
+        const range:number[] = [100,-100];
+
+        var startFromFret:number = 0;
+        // console.log(targetStrings)
+        for (const string of targetStrings) {
+            const fret:number = getFretNumberFromNoteAndString(scalePageState.rootNote, string, startFromFret);
+            console.log("string: ", string, " rootNote: ", scalePageState.rootNote, "fret: ", fret, " | startFromFret: ", startFromFret)
+            range[0] = Math.min(range[0], fret) // set min
+            range[1] = Math.max(range[1], fret) // set max
+            startFromFret = (startFromFret === 0 ? fret : Math.min(startFromFret, fret))
+
+        }
+
+        // add/subtract offset from range
+        const offset:number[] = positionOffset[scalePageState.scale][position]
+        range[0] = range[0] - offset[0] // adjust min
+        range[1] = range[1] + offset[1] // adjust max 
+
+        return range;
+    }
     
     const fretboardProps: FretboardProps = {
         page: "/scale",
@@ -37,7 +48,7 @@ const ScalePage = () => {
         numStrings: fretboardState.numStrings,
         numFrets: fretboardState.numFrets,     
         stringRange: [1,6],
-        fretRange: [0,22],
+        fretRange: getFretRange(scalePageState.position),
         rootNote: scalePageState.rootNote,
         notesToDisplay: getNotesToDisplayFromScale(scalePageState.rootNote, scalePageState.scale)
     }
@@ -73,7 +84,7 @@ const ScalePage = () => {
     const createPositionButtons = () => {
         return(
             <div className="position-buttons">
-                { Object.keys(positionToStringNumber).map((position: string) => {
+                { Object.keys(positionToRootNoteStringNumber).map((position: string) => {
                     return (
                         <Button 
                             key={position}
@@ -99,7 +110,7 @@ const ScalePage = () => {
 
     const createScaleButtons = () => {
         return(
-            <div className="scaleButtons">
+            <div className="scaleButtons" style={{width:"70%", margin: "0 auto"}}>
                 { Object.keys(scaleToInterval).map((scale:string) => {
                     return (
                         <Button 
