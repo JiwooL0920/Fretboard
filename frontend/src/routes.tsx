@@ -1,4 +1,4 @@
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/Homepage";
 import FretGamePage from "./pages/FretGamePage";
 import ScalePage from "./pages/ScalePage";
 import TriadPage from "./pages/TriadPage";
