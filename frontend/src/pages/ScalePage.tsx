@@ -119,7 +119,7 @@ const ScalePage = () => {
 
     const createScaleButtons = () => {
         return(
-            <div className="scaleButtons" style={{width:"60%", margin: "0 auto"}}>
+            <div className="scaleButtons" style={{minWidth: 1000, width:"60%", margin: "0 auto"}}>
                 { Object.keys(scaleToInterval).map((scale:string) => {
                     return (
                         <Button 
@@ -163,7 +163,7 @@ const ScalePage = () => {
                 </Grid>
                 <Grid item>Interval</Grid>
             </Grid>
-            
+
             <Fretboard {...fretboardProps}/>
             {createRootNoteButtons()}
             {createPositionButtons()}
