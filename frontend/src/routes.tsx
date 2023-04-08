@@ -1,8 +1,8 @@
 import HomePage from "./pages/Homepage";
 import FretGamePage from "./pages/FretGamePage";
 import ScalePage from "./pages/ScalePage";
-import TriadPage from "./pages/TriadPage";
-import ChordPage from "./pages/ChordPage";
+// import TriadPage from "./pages/TriadPage";
+// import ChordPage from "./pages/ChordPage";
 import IntervalPage from "./pages/IntervalPage";
 
 const routes = [

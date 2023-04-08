@@ -6,6 +6,9 @@ import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
 import Grid from '@mui/material/Grid';
 
+import { ArrowDropUp, ArrowDropDown } from '@mui/icons-material';
+
+
 // REDUX
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux/store';
@@ -92,26 +95,30 @@ const ScalePage = () => {
 
     const createPositionButtons = () => {
         return(
-            <div className="position-buttons">
+            <div className="position-buttons" style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
                 { Object.keys(positionToRootNoteStringNumber).map((position: string) => {
                     return (
-                        <Button 
-                            key={position}
-                            sx={{
-                                width: 50,
-                                height: 50,
-                                margin: 0.7,
-                                color: '#FFFFFF',
-                                fontSize: 20,
-                                textTransform: 'none',
-                                backgroundColor: parseInt(position) === scalePageState.position ? '#485c7b' : '#303233',
-                                '&:hover': { backgroundColor: parseInt(position) === scalePageState.position ? '#3f506b' : '#1e252b'}
-                                
-                            }}
-                            onClick={() => dispatch(scalePageSlice.setPosition(parseInt(position)))}
-                        >
-                            {position}
-                        </Button>
+                        <div className="position-button" style={{display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
+                            <ArrowDropUp sx={{fontSize:50, margin:-2}}/>
+                            <Button 
+                                key={position}
+                                sx={{
+                                    width: 50,
+                                    height: 50,
+                                    margin: 0.7,
+                                    color: '#FFFFFF',
+                                    fontSize: 20,
+                                    textTransform: 'none',
+                                    backgroundColor: parseInt(position) === scalePageState.position ? '#485c7b' : '#303233',
+                                    '&:hover': { backgroundColor: parseInt(position) === scalePageState.position ? '#3f506b' : '#1e252b'}
+                                    
+                                }}
+                                onClick={() => dispatch(scalePageSlice.setPosition(parseInt(position)))}
+                            >
+                                {position}
+                            </Button>
+                            <ArrowDropDown sx={{fontSize:50, margin:-2}}/>
+                        </div>
                     )})}
             </div>
         );
@@ -121,7 +128,7 @@ const ScalePage = () => {
         return(
             <div className="scaleButtons" style={{minWidth: 800, width:"70%", margin: "0 auto"}}>
                 { Object.keys(scaleToInterval).map((scale:string) => {
-                    return (
+                    return (                            
                         <Button 
                             key={scale}
                             sx={{
