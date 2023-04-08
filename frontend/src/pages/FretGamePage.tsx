@@ -42,7 +42,7 @@ const FretGamePage = () => {
             <Box 
                 sx={{   // backgroundColor: '#303233',
                         color: "##e7e6e5", 
-                        fontSize: 40, 
+                        fontSize: 30, 
                         fontWeight: "bold",
                         width: "70%",
                         margin: "0 auto",
@@ -51,7 +51,7 @@ const FretGamePage = () => {
                         borderRadius: 5,                        
             }}>
                 <div style={{display:"inline-block", alignSelf: "flex-end"}}>{"Time Left: " + fretGamePageState.time}</div>
-                <div style={{color:"#711a39", fontSize:80}}>{fretGamePageState.note}</div>
+                <div style={{color:"#711a39", fontSize:50}}>{fretGamePageState.note}</div>
                 <div style={{display:"inline-block", alignSelf: "flex-end"}}>{"Score: " + fretGamePageState.score}</div>
                 
             </Box>

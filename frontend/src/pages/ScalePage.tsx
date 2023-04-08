@@ -71,11 +71,11 @@ const ScalePage = () => {
                         <Button 
                             key={note}
                             sx={{
-                                width: 80,
-                                height: 80,
-                                margin: 1,
+                                width: 50,
+                                height: 50,
+                                margin: 0.7,
                                 color: '#FFFFFF',
-                                fontSize: 30,
+                                fontSize: 20,
                                 textTransform: 'none',
                                 backgroundColor: note === scalePageState.rootNote ? '#711a39' : '#303233',
                                 '&:hover': { backgroundColor: note === scalePageState.rootNote ? '#611630' : '#1e252b'}
@@ -98,11 +98,11 @@ const ScalePage = () => {
                         <Button 
                             key={position}
                             sx={{
-                                width: 80,
-                                height: 80,
-                                margin: 1,
+                                width: 50,
+                                height: 50,
+                                margin: 0.7,
                                 color: '#FFFFFF',
-                                fontSize: 30,
+                                fontSize: 20,
                                 textTransform: 'none',
                                 backgroundColor: parseInt(position) === scalePageState.position ? '#485c7b' : '#303233',
                                 '&:hover': { backgroundColor: parseInt(position) === scalePageState.position ? '#3f506b' : '#1e252b'}
@@ -119,17 +119,17 @@ const ScalePage = () => {
 
     const createScaleButtons = () => {
         return(
-            <div className="scaleButtons" style={{minWidth: 1000, width:"60%", margin: "0 auto"}}>
+            <div className="scaleButtons" style={{minWidth: 800, width:"70%", margin: "0 auto"}}>
                 { Object.keys(scaleToInterval).map((scale:string) => {
                     return (
                         <Button 
                             key={scale}
                             sx={{
-                                width: 270,
-                                height: 80,
-                                margin: 1,
+                                width: 200,
+                                height: 50,
+                                margin: 0.7,
                                 color: '#FFFFFF',
-                                fontSize: 30,
+                                fontSize: 20,
                                 textTransform: 'none',
                                 backgroundColor: scale === scalePageState.scale ? '#546961' : '#303233',
                                 '&:hover': { backgroundColor: scale === scalePageState.scale ? '#455750' : '#1e252b'}
@@ -150,7 +150,7 @@ const ScalePage = () => {
         <div className="scale-page">
             <h1>Scale Generator</h1>
             <Grid component="label" container alignItems="center" justifyContent="center" spacing={1} 
-                  sx={{ fontSize: 28, margin:3 }}
+                  sx={{ fontSize: 20 }}
             >
                 <Grid item>Note</Grid>
                 <Grid item>

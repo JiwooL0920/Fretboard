@@ -38,11 +38,11 @@ const IntervalPage = () => {
                         <Button 
                             key={note}
                             sx={{
-                                width: 80,
-                                height: 80,
-                                margin: 1,
+                                width: 50,
+                                height: 50,
+                                margin: 0.7,
                                 color: '#FFFFFF',
-                                fontSize: 30,
+                                fontSize: 20,
                                 textTransform: 'none',
                                 backgroundColor: note === intervalPageState.rootNote ? '#711a39' : '#303233',
                                 '&:hover': { backgroundColor: note === intervalPageState.rootNote ? '#611630' : '#1e252b'}
@@ -65,11 +65,11 @@ const IntervalPage = () => {
                         <Button
                             key={interval}
                             sx={{
-                                width: 250,
-                                height: 80,
-                                margin: 1,
+                                width: 200,
+                                height: 50,
+                                margin: 0.7,
                                 color: '#FFFFFF',
-                                fontSize: 30,
+                                fontSize: 20,
                                 textTransform: 'none',
                                 backgroundColor: intervalPageState.selectedIntervals.includes(interval) ? '#546961' : '#303233',
                                 '&:hover': { backgroundColor: intervalPageState.selectedIntervals.includes(interval) ? '#455750' : '#1e252b'},
@@ -92,7 +92,7 @@ const IntervalPage = () => {
         <div className="interval-page">
             <h1>Interval Generator</h1>
             <Grid component="label" container alignItems="center" justifyContent="center" spacing={1} 
-                  sx={{ fontSize: 28, margin:3 }}
+                  sx={{ fontSize: 20 }}
             >
                 <Grid item>Note</Grid>
                 <Grid item>
