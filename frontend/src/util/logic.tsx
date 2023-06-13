@@ -218,7 +218,14 @@ export const positionOffset: { [key: string]: { [key:number]: number[]} } = {
 // CHORD ============================================
 export const chordToInterval: { [key: string]: string[] } = {
     "Maj": ["1", "3" , "5"],
-    "Min": ["1", "b3", "5"]
+    "min": ["1", "b3", "5"],
+    "dim": ["1", "b3", "b5"],
+    "aug": ["1", "3", "#5"],
+    "Maj7": ["1", "3", "5", "7"],
+    "min7": ["1", "b3", "5", "b7"],
+    "7": ["1", "3", "5", "b7"],
+    "m7b5": ["1", "b3", "b5", "b7"],
+    "m(Maj7)": ["1", "b3", "5", "7"]
 }
 
 // HELPER

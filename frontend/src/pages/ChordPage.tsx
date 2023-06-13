@@ -1,6 +1,6 @@
 import React from 'react'
 import Fretboard, {FretboardProps} from '../components/Fretboard'
-import {notesFlat, notesSharp, getNotesToDisplayFromScale, getNotesToDisplayFromChord, positionToRootNoteStringNumber, scaleToInterval, getFretNumberFromNoteAndString, positionOffset} from '../util/logic'
+import {notesFlat, notesSharp, getNotesToDisplayFromScale, getNotesToDisplayFromChord, positionToRootNoteStringNumber, scaleToInterval, getFretNumberFromNoteAndString, positionOffset, chordToInterval} from '../util/logic'
 import {Accidental, DisplayMode} from '../util/enums'
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
@@ -62,6 +62,33 @@ const ChordPage = () => {
         );
     }
 
+    const createChordButtons = () => {
+        return(
+            <div className="chordButtons" style={{width:"70%", margin: "0 auto"}}>
+                {Object.keys(chordToInterval).map((chord:string) => {
+                    return (
+                        <Button
+                            key={chord}
+                            sx={{
+                                width: 200,
+                                height: 50,
+                                margin: 0.7,
+                                color: '#FFFFFF',
+                                fontSize: 20,
+                                textTransform: 'none',
+                                backgroundColor: chordPageState.chordType === chord ? '#546961' : '#303233',
+                                '&:hover': { backgroundColor: chordPageState.chordType === chord ? '#455750' : '#1e252b'},
+                            }}
+                            onClick={() => { dispatch(chordPageSlice.setChordType(chord)) }}
+                        >
+                            {chord}
+                        </Button>
+                    )
+                })}
+            </div>
+        );
+    }
+
 
     return (
         <div className="chord-page">
@@ -83,8 +110,8 @@ const ChordPage = () => {
 
 
             <Fretboard {...fretboardProps}/>  
-
             {createRootNoteButtons()}
+            {createChordButtons()}
         </div>
         
     )
