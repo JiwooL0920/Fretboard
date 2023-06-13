@@ -9,14 +9,14 @@ export interface ChordPageState {
 }
 
 const initialState: ChordPageState = {
-    rootNote: 'C',
+    rootNote: "C",
     chordType: "Maj",
     displayMode: DisplayMode.Interval
 }
 
 
 export const chordPageSlice = createSlice({
-    name: 'intervalPage-setting',
+    name: 'chordPage-setting',
     initialState,
     reducers:  {
         setRootNote: (state, action: PayloadAction<string>) => {
@@ -27,13 +27,18 @@ export const chordPageSlice = createSlice({
         },       
         setDisplayMode: (state, action: PayloadAction<DisplayMode>) => {
             state.displayMode = action.payload;
-        }  
+        },
+        toggleDisplayMode: (state) => {
+            state.displayMode = state.displayMode === DisplayMode.Note ? DisplayMode.Interval : DisplayMode.Note;
+        },
     }
 });
 
 // this is for dispatch
 export const {  setRootNote, 
-                setChordType
+                setChordType,
+                setDisplayMode,
+                toggleDisplayMode
              } = chordPageSlice.actions;
 
 // this is for configureStore

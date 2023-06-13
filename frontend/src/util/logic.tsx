@@ -215,6 +215,14 @@ export const positionOffset: { [key: string]: { [key:number]: number[]} } = {
                                      
 }
 
+// CHORD ============================================
+export const chordToInterval: { [key: string]: string[] } = {
+    "Maj": ["1", "3" , "5"],
+    "Min": ["1", "b3", "5"]
+}
+
+// HELPER
+
 // given note and string, determine which fret the note occurs 
 // ex. note="C", string="6"
 // result="8"
@@ -236,3 +244,11 @@ export const getNotesToDisplayFromScale = (rootNote:string, scale: string): { [k
     return result 
 }
 
+export const getNotesToDisplayFromChord = (rootNote:string, chordType:string): { [key: string]: string } => {
+    const result: { [key: string]: string } = {}
+    for (const interval of chordToInterval[chordType]) {
+        const note:string = getIntervalNoteFromRootNote(rootNote, interval);
+        result[note] = interval;
+    }
+    return result 
+}
