@@ -9,8 +9,9 @@ npm run dev
 
 ![scale](/frontend/src/assets/img/scale.png)
 
-An extension of my previous project:
-https://github.com/JiwooL0920/ChordRite
+Currently running service:
+1. Interval Generator
+2. Scale Generator 
 
-Previous Project Available at:
-https://jiwool0920.github.io/ChordRite/index.html
+Now working on:
+3. Chord Generator 

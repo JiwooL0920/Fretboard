@@ -6,10 +6,12 @@ import Switch from '@mui/material/Switch';
 import Grid from '@mui/material/Grid';
 
 // REDUX
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux/store';
 import * as fretboardSlice from '../redux/fretboardSlice'
 import * as intervalPageSlice from '../redux/intervalPageSlice'
+
 
 const IntervalPage = () => {
     // REDUX

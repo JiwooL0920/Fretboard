@@ -65,7 +65,6 @@ const ScalePage = () => {
         notesToDisplay: getNotesToDisplayFromScale(scalePageState.rootNote, scalePageState.scale)
     }
 
-
     const createRootNoteButtons = () => {
         return(
             <div className="rootButtons">
@@ -99,7 +98,7 @@ const ScalePage = () => {
                 { Object.keys(positionToRootNoteStringNumber).map((position: string) => {
                     return (
                         <div className="position-button" style={{display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
-                            <ArrowDropUp sx={{fontSize:50, margin:-2}}/>
+                            {/* <ArrowDropUp sx={{fontSize:50, margin:-2}}/> */}
                             <Button 
                                 key={position}
                                 sx={{
@@ -117,7 +116,7 @@ const ScalePage = () => {
                             >
                                 {position}
                             </Button>
-                            <ArrowDropDown sx={{fontSize:50, margin:-2}}/>
+                            {/* <ArrowDropDown sx={{fontSize:50, margin:-2}}/> */}
                         </div>
                     )})}
             </div>
