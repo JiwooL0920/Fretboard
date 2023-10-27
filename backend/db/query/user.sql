@@ -12,7 +12,3 @@ INSERT INTO users (
 SELECT * FROM users
 WHERE username = $1
 LIMIT 1;
-
--- name: DeleteUser :exec
-DELETE FROM users
-WHERE username = $1;
