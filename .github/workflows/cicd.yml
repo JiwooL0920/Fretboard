@@ -17,6 +17,8 @@ jobs:
           POSTGRES_DB: fret_db
           POSTGRES_USER: root
           POSTGRES_PASSWORD: secret
+        ports:
+          - 5432:5432
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -34,6 +36,12 @@ jobs:
 
     - name: CD into backend dir
       run: cd backend
+    
+    - name: Install golang-migrate
+      run: |
+        curl -L https://github.com/golang-migrate/releases/download/$version/migrate.$platform-amd64.tar.gz | tar xvz
+        sudo mv migrate.linux-amd64 /usr/bin/migrate
+        which migrate
 
     - name: Run migrations
       run: make migrate-up
