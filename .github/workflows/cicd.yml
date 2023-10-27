@@ -2,9 +2,9 @@ name: ci-test
 
 on:
   push:
-    branches: [ master, develop ]
+    branches: [ develop ]
   pull_request:
-    branches: [ master, develop ]
+    branches: [ main ]
 
 jobs:
   test:
@@ -46,9 +46,9 @@ jobs:
       run: |
         pwd
         ls
-        
+
     - name: Run migrations
       run: make migrate-up
 
     - name: Test
-      run: make test 
+      run: cd backend && make test 
