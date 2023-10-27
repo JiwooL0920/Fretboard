@@ -43,13 +43,8 @@ jobs:
         curl -L https://github.com/golang-migrate/migrate/releases/download/v4.16.2/migrate.linux-amd64.tar.gz | tar xvz
         sudo mv migrate /usr/bin/migrate
 
-    - name: asdf
-      run: |
-        pwd
-        ls
-
     - name: Run migrations
       run: make migrate-up
 
     - name: Test
-      run: cd backend && make test 
+      run: make test 
