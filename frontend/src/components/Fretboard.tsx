@@ -45,7 +45,7 @@ const Fretboard = (props: FretboardProps) => {
     const setting: FretboardProps = props 
     console.log(setting)
 
-    const hasIntervalMode: boolean = ["/interval","/scale"].includes(setting.page)
+    const hasIntervalMode: boolean = ["/interval","/scale", "/chord"].includes(setting.page)
 
     // STRING COMPONENT ==========================================================
     const String = (props: StringProps) => {

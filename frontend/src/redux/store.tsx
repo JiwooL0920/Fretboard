@@ -5,6 +5,8 @@ import fretboardSlice from './fretboardSlice';
 import intervalPageSlice from './intervalPageSlice';
 import fretGamePageSlice from './fretGamePageSlice';
 import scalePageSlice from './scalePageSlice';
+import chordPageSlice from './chordPageSlice';
+
 
 // Suppress some error message
 const customizedMiddleware = getDefaultMiddleware({
@@ -16,7 +18,8 @@ export const store = configureStore({
     fretboard: fretboardSlice,
     fretGamePage: fretGamePageSlice,
     intervalPage: intervalPageSlice,
-    scalePage: scalePageSlice
+    scalePage: scalePageSlice,
+    chordPage: chordPageSlice
   },
   middleware: customizedMiddleware
 })

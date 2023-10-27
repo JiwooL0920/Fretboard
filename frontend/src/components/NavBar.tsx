@@ -43,12 +43,12 @@ const NavBar = () => {
   return (
     <AppBar 
         position="static"
-        style={{ background: navBarColor }}
+        style={{ background: navBarColor}}
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-          <MusicNoteIcon sx={{fontSize: 50}}/>
+          <MusicNoteIcon sx={{fontSize: 30}}/>
           <Typography
             variant="h6"
             noWrap
@@ -62,7 +62,7 @@ const NavBar = () => {
               letterSpacing: '.3rem',
               color: textColor,
               textDecoration: 'none',
-              fontSize: '50px'
+              fontSize: '30px'
             }}
           >
             FRET
@@ -78,7 +78,7 @@ const NavBar = () => {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <MenuIcon sx={{fontSize: '50px'}}/>
+              <MenuIcon sx={{fontSize: '30px'}}/>
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -126,7 +126,7 @@ const NavBar = () => {
               letterSpacing: '.3rem',
               color: textColor,
               textDecoration: 'none',
-              fontSize: "50px"
+              fontSize: "30px"
             }}
           >
             FRET
@@ -139,7 +139,7 @@ const NavBar = () => {
                     handleCloseNavMenu();
                     navigate(r.path)
                 }}
-                sx={{ my: 2, color: textColor, display: 'block' , fontSize: '25px'}}
+                sx={{ my: 2, color: textColor, display: 'block' , fontSize: '20px'}}
               >
                 {r.navName}
               </Button>
