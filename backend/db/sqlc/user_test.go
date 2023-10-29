@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/jiwool0920/Fretboard/util"
+	"github.com/jiwool0920/Fretboard/backend/util"
 	"github.com/stretchr/testify/require"
 )
 
