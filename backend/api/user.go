@@ -6,30 +6,34 @@ import (
 
 	"github.com/gin-gonic/gin"
 	db "github.com/jiwool0920/Fretboard/backend/db/sqlc"
+	"github.com/jiwool0920/Fretboard/backend/util"
 )
 
 type createUserRequest struct {
 	Username  string `json:"username" binding:"required,alphanum"`
+	Password  string `json:"password" binding:"required,min=6"`
 	FirstName string `json:"first_name" binding:"required"`
 	LastName  string `json:"last_name" binding:"required"`
 	Email     string `json:"email" binding:"required,email"`
 }
 
 type userResponse struct {
-	Username  string    `json:"username"`
-	FirstName string    `json:first_name`
-	LastName  string    `json:last_name`
-	Email     string    `json:"email"`
-	CreatedAt time.Time `json:"created_at"`
+	Username          string    `json:"username"`
+	FirstName         string    `json:"first_name"`
+	LastName          string    `json:"last_name"`
+	Email             string    `json:"email"`
+	PasswordChangedAt time.Time `json:"password_changed_at"`
+	CreatedAt         time.Time `json:"created_at"`
 }
 
 func newUserResponse(user db.User) userResponse {
 	return userResponse{
-		Username:  user.Username,
-		FirstName: user.FirstName,
-		LastName:  user.LastName,
-		Email:     user.Email,
-		CreatedAt: user.CreatedAt,
+		Username:          user.Username,
+		FirstName:         user.FirstName,
+		LastName:          user.LastName,
+		Email:             user.Email,
+		PasswordChangedAt: user.PasswordChangedAt,
+		CreatedAt:         user.CreatedAt,
 	}
 }
 
@@ -40,11 +44,17 @@ func (server *Server) createUser(ctx *gin.Context) {
 		return
 	}
 
+	hashedPassword, err := util.HashPassword(req.Password)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+	}
+
 	arg := db.CreateUserParams{
-		Username:  req.Username,
-		FirstName: req.FirstName,
-		LastName:  req.LastName,
-		Email:     req.Email,
+		Username:       req.Username,
+		HashedPassword: hashedPassword,
+		FirstName:      req.FirstName,
+		LastName:       req.LastName,
+		Email:          req.Email,
 	}
 
 	user, err := server.store.CreateUser(ctx, arg)

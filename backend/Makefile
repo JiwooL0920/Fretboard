@@ -25,4 +25,7 @@ server:
 tidy:
 	go mod tidy
 
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc test server tidy
+mock:
+	mockgen -package mockdb -destination db/mock/store.go github.com/jiwool0920/Fretboard/backend/db/sqlc Store 
+
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc test server tidy mock
