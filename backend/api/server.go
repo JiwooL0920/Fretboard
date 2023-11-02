@@ -1,24 +1,34 @@
 package api
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 	db "github.com/jiwool0920/Fretboard/backend/db/sqlc"
+	"github.com/jiwool0920/Fretboard/backend/token"
 	"github.com/jiwool0920/Fretboard/backend/util"
 )
 
 // Server serves HTTP requests for our banking service.
 type Server struct {
-	config util.Config
-	store  db.Store
-	router *gin.Engine
+	config     util.Config
+	store      db.Store
+	tokenMaker token.Maker
+	router     *gin.Engine
 }
 
 // NewServer creates a new HTTP server and set up routing.
 func NewServer(config util.Config, store db.Store) (*Server, error) {
+	tokenMaker, err := token.NewPasetoMaker(config.TokenSymmetricKey)
+	// tokenMaker, err := token.NewJWTMaker(config.TokenSymmetricKey)
+	if err != nil {
+		return nil, fmt.Errorf("cannot create token maker: %w", err)
+	}
 
 	server := &Server{
-		config: config,
-		store:  store,
+		config:     config,
+		store:      store,
+		tokenMaker: tokenMaker,
 	}
 
 	server.setupRouter()
@@ -29,6 +39,9 @@ func (server *Server) setupRouter() {
 	router := gin.Default()
 
 	router.POST("/users", server.createUser)
+	router.POST("/users/login", server.loginUser)
+
+	// authRoutes := router.Group("/").Use(authMiddleware(server.tokenMaker))
 
 	server.router = router
 }
